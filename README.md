@@ -1,4 +1,4 @@
-This document describes/defines FILL-THIS-OUT in the [Virtual
+This document describes/defines HighEnergyObsCoreExt in the [Virtual
 Observatory](https://ivoa.net)
 
 Stable versions of this document are available through the [IVOA
