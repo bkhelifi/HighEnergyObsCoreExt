@@ -2,26 +2,82 @@
 \input tthdefs
 \input gitmeta
 
-\title{???? Full title ????}
+\title{IVOA Obscore Extension for HE data}
 
 % see ivoatexDoc for what group names to use here; use \ivoagroup[IG] for
 % interest groups.
-\ivoagroup{???? group ????}
+\ivoagroup{High Energy Interest Group}
 
-\author[????URL????]{????Alfred Usher Thor????}
 \author{????Fred Offline????}
 
 \editor{????Alfred Usher Thor????}
 
-% \previousversion[????URL????]{????Concise Document Label????}
 \previousversion{This is the first public release}
 
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage{lscape}
+%\usepackage{booktabs} % For prettier tables
+\usepackage{lscape}
+%\usepackage{minted}
+\setlength {\marginparwidth }{2cm}
+\usepackage{todonotes}
+
+\usepackage[toc]{glossaries}
+\newacronym{IVOA}{IVOA}{International Virtual Observatory Alliance}
+\newacronym{VO}{VO}{Virtual Observatory}
+\newacronym{HE}{HE}{High Energy}
+\newacronym{HEIG}{HEIG}{High Energy Interest Group}
+\newacronym{VHE}{VHE}{Very High Energy}
+\newacronym{HESS}{H.E.S.S.}{High Energy Stereoscopic System}
+\newacronym{CTAO}{CTAO}{Cherenkov Telescope Array Observatory}
+\newacronym{IACT}{IACT}{imaging atmospheric Cherenkov telescopes}
+\newacronym{IRF}{IRF}{instrument response function}
+\newacronym{PSF}{PSF}{point spread function}
+\newacronym{RMF}{RMF}{redistribution matrix file}
+\newacronym{ARF}{ARF}{auxiliary response file}
+\newacronym{ESA}{ESA}{European Space Agency}
+\newacronym{XMM-Newton}{XMM-Newton}{X-ray Multi-Mirror Mission}
+\newacronym{SSC}{SSC}{Survey Science Centre}
+\newacronym{SOC}{SOC}{Science Operations Centre}
+\newacronym{ESAC}{ESAC}{European Space Astronomy Centre}
+\newacronym{SAS}{SAS}{scientific analysis software}
+\newacronym{EPIC}{EPIC}{European Photon Imaging Camera}
+\newacronym{TAP}{TAP}{table access protocol}
+\newacronym{SVOM}{SVOM}{Space-based multi-band astronomical Variable Objects Monitor}
+\newacronym{KM3NeT}{KM3NeT}{Cubic Kilometre Neutrino Telescope}
+\newacronym{ORCA}{ORCA}{Oscillation Research with Cosmics in the Abyss}
+\newacronym{ARCA}{ARCA}{Astroparticle Research with Cosmics in the Abyss}
+\newacronym{ANTARES}{ANTARES}{Astronomy with a Neutrino Telescope and Abyss Environmental Research}
+\newacronym{GW}{GW}{Gravitational wave}
+\newacronym{WCD}{WCD}{Water Cherenkov Detector}
+\newacronym{STI}{STI}{stable time interval}
+\newacronym{GTI}{GTI}{good time interval}
+\newacronym{FITS}{FITS}{Flexible Image Transport System}
+\newacronym{ACIS}{ACIS}{Advanced CCD Imaging Spectrometer}
+\newacronym{HRC}{HRC}{High Resolution Camera}
+\newacronym{CXC}{CXC}{Chandra X-ray Center}
+\newacronym{CDA}{CDA}{Chandra Data Archive}
+\newacronym{CTI}{CTI}{charge transfer efficiency}
+\newacronym{OGIP}{OGIP}{Office of Guest Investigator Programs}
+\newacronym{NASA}{NASA}{National Aeronautics and Space Administration}
+\newacronym{HEASARC}{HEASARC}{High Energy Astrophysics Science Archive Research Center}
+\newacronym{GADF}{GADF}{Gamma-ray Astronomy Data Format}
+\newacronym{VODF}{VODF}{Very-high-energy Open Data Format}
+\newacronym{MAGIC}{MAGIC}{Major Atmospheric Gamma-ray Imaging Cherenkov}
+\newacronym{VERITAS}{VERITAS}{Very Energetic Radiation Imaging Telescope Array System}
+\newacronym{FACT}{FACT}{First G-APD Cherenkov Telescope}
+\newacronym{HAWC}{HAWC}{High Altitude Water Cherenkov Experiment}
+\newacronym{LHAASO}{LHAASO}{Large High Altitude Air Shower Observatory}
+\newacronym{CAOM}{CAOM}{Comon Archive Observation Model}
+\makeglossaries
 
 \begin{document}
-\begin{abstract}
-???? Abstract ????
-\end{abstract}
 
+\begin{abstract}
+This is a proposed extension to the ObsCore specification for data description, discovery and selection of High Energy data.  
+\end{abstract}
 
 \section*{Acknowledgments}
 
@@ -33,51 +89,218 @@ The words ``MUST'', ``SHALL'', ``SHOULD'', ``MAY'', ``RECOMMENDED'', and
 ``OPTIONAL'' (in upper or lower case) used in this document are to be
 interpreted as described in IETF standard RFC2119 \citep{std:RFC2119}.
 
-The \emph{Virtual Observatory (VO)} is a
-general term for a collection of federated resources that can be used
-to conduct astronomical research, education, and outreach.
-The \href{https://www.ivoa.net}{International
-Virtual Observatory Alliance (IVOA)} is a global
-collaboration of separately funded projects to develop standards and
-infrastructure that enable VO applications.
-
+The \emph{Virtual Observatory (VO)} is a general term for a collection of federated resources that can be used to conduct astronomical research, education, and outreach.
+The \href{https://www.ivoa.net}{International Virtual Observatory Alliance (IVOA)} is a global collaboration of separately funded projects to develop standards and infrastructure that enable VO applications.
 
 \section{Introduction}
 
-???? Write something ????
+The High Energy Interest Group was formed in the IVOA in Fall of 2024.  As part of that process for acceptance, the group wrote an \gls{IVOA} note that explores the connections between the Virtual Observatory (\gls{VO}) and High Energy (\gls{HE}) astrophysics (Servillat, M., et al, 2024). The \gls{HEIG} Note includes an outline of several important topics that has formed a roadmap for the group. An ObsCore extension for High Energy data is the first priority in order to meet a needs for \gls{HE}, and to coincide with work being carried out by the Radio IG, Time Domain IG, and discussions on DM standards (e.g., \gls{CAOM}).
 
-\subsection{Role within the VO Architecture}
+The goal is to define an extension to Obscore to enable a more complete description of High Energy data, and that will lead to better discovery and selection of High Energy data through \gls{IVOA} interfaces.  We explore what is needed for High Energy and we highlight commonality with the proposed Radio and/or Time extension.  If 1) an item is unique for \gls{HE}, it will appear in the HE extension, if 2) an item makes sense for more that one domain, the keyword will need to be named unique for each domain, if 3) an item can be shared, then it needs to be added to the base Obscore model.  We will make recommendations in all three categories.   Topics related to the Registry are currently outlined in the Radio document and not discussed here.
 
-\begin{figure}
-\centering
-
+%\subsection{Role within the VO Architecture}
+%\begin{figure}
+%\centering
 % As of ivoatex 1.2, the architecture diagram is generated by ivoatex in
 % SVG; copy ivoatex/archdiag-full.xml to role_diagram.xml and throw out
 % all lines not relevant to your standard.
 % Notes don't generally need this.  If you don't copy role_diagram.xml,
 % you must remove role_diagram.pdf from SOURCES in the Makefile.
+%\includegraphics[width=0.9\textwidth]{role_diagram.pdf}
+%\caption{Architecture diagram for this document}
+%\label{fig:archdiag}
+%\end{figure}
+%Fig.~\ref{fig:archdiag} shows the role this document plays within the
+%IVOA architecture \citep{2021ivoa.spec.1101D}.
+%???? and so on, LaTeX as you know and love it. ????
 
-\includegraphics[width=0.9\textwidth]{role_diagram.pdf}
-\caption{Architecture diagram for this document}
-\label{fig:archdiag}
-\end{figure}
+\section{Obscore section from VOHE Note}
+The following section is a placeholder and has been copied from section 6.2 of the HE Note (section with Obscore extension details).  Seeding it here to collect information on Obscore written by HEIG member to one spot.  Expect it to be edited/replaced - whatever makes sense for this doc.
 
-Fig.~\ref{fig:archdiag} shows the role this document plays within the
-IVOA architecture \citep{2021ivoa.spec.1101D}.
+\subsection{ObsCore description of an event-list}
+\label{sec:obscore_he}
 
-???? and so on, LaTeX as you know and love it. ????
+ObsCore \citep{2017ivoa.spec.0509L} can provide a metadata profile for a data product of type event-list (event) and a qualified access to the distributed file using the Access class from ObsCore (URL, format, file size).
+
+\subsubsection{Usage of the mandatory terms in ObsCore}
+
+In the ObsCore representation, the event-list data product is described in terms of curation, coverage and access. However, several properties are simply set to NULL following the recommendation: Resolutions, Polarisation States, Observable Axis Description, Axes lengths (set to -1).
+
+We also note that some properties are energy dependent, such as the Spatial Coverage, Spatial Extent, \gls{PSF}.
+
+Terms in ObsCore may be filled in the following way for example, considering a \gls{CTAO} DL3 dataset:
+
+\begin{itemize}
+    \item dataproduct\_type = event
+    \item dataproduct\_subtype = DL3, maybe specific data format (e.g. \gls{VODF})
+    \item calib\_level = between 1 and 2
+    \item obs\_collection could contain many details : obs\_type (calib, science), obs\_mode (subarray
+configuration), pointing\_mode, tracking\_type, event\_type, event\_cuts, analysis\_type…
+    \item s\_ra, s\_dec = maybe telescope pointing coordinates
+    \item target\_name : several targets may be in the field of view
+    \item s\_fov, s\_region, s\_resolution, em\_resolution... all those values are energy dependent, one should specifiy that the value is at a given energy, or within a range of values.
+    \item em\_min, em\_max : add fields expressed in energy (e.g. eV, keV or TeV)
+    \item t\_exptime : ontime, livetime, stable time intervals... maybe a T-MOC would help
+    \item facility\_name, instrument\_name : minimalist, would be e.g. \gls{CTAO} and a subarray.
+\end{itemize}
+
+
+\subsubsection{Metadata re-interpretation for the HE context}
+
+\paragraph{obs\_id}
+In the current definition of ObsCore, the data product collects data from one or several observations. The same happens in \gls{HE} context.
+
+\paragraph{access\_ref, access\_format}
+The initial role of this metadata was to hold the access\_url allowing data access.
+Depending on the packaging of the event bundle in one compact format (\gls{OGIP}, \gls{GADF}, tar ball, ...)
+or as different files available independently in various urls, a datalink pointer may be used for accessing the various parts of \gls{IRF}s, background maps, etc.
+Then in such a case the value for access\_format should be "application/x-votable+xml;content=datalink". The format itself of the data file is then given by the datalink parameter "content-type".
+See next section \ref{sec:datalink}.
+
+\paragraph{o\_ucd}
+For the even-list table, we can consider that all measures stored in column values have been observed.
+The nature of items along time, position and energy axis are identifed in Obscore with UCD as 'time', 'pos.eq.*', 'em.*'
+and counted as t\_xel, s\_xel1, s\_xel2, em\_xel which correspond to the number of rows/events candidates observed.
+
+The signal observed is the result of event counting and would be PHA (Pulse height amplitude at detector level) or a number of counts for photons or particles, or a flux, etc.., depending on the data calibration level considered.
+ObsCore uses o\_ucd to characterise the nature of the measure.
+Various UCDs are used for that: o\_ucd=phys.count, phot.count, phot.flux, etc. there is currently no UCD defined for a raw measure like PulseHeightAmplitude, but if needed this can be requested for addition in the UCDList vocabulary\footnote{See VEP-UCD-15\_pulseheight.txt proposed at \url{'https://voparis-gitlab.obspm.fr/vespa/ivoa-standards/semantics/vep-ucd/-/blob/master/'}}.
+
+Note that these parameters vary between the dataset of calib\_level of 1 (Raw) to the a more advanced data products (calib\_level 2 or 3), which are filtered and rebinned from the original raw event-list.
+
+
+\subsubsection{Possible additions}
+
+\paragraph{ev\_number}
+The event-list contains a number of rows, representing detections candidates, that have no metadata keyword yet in Obscore.
+We could propose 'ev\_number' to record this.
+In fact the t\_xel, s\_xel1 and s\_xel2, em\_xel elements do not apply for an event-list in raw count as it has not been binned yet.
+
+\paragraph{Adding MIME-type to access\_format table}
+As seen in section \ref{sec:data_formats} current \gls{HE} experiments and observatories use their community defined data format for data dissemination.
+They encapsulate the event-list table together with ancillary data dedicated to calibration and observing configurations and parameters.
+Even if the encapsulation is not standardised between the various projects, it is useful for a client application to rely on the access\_format property in order to send it to an appropriate visualising tool.
+
+Therefore these can be included in the MIME-type table of ObsCore section 4.7. suggestion for new terms like :
+\begin{itemize}
+\item application/x-fits-ogip ...
+\item application/x-gadf  ...
+\item application/x-vodf  ...
+\end{itemize}
+
+\paragraph{energy\_min, energy\_max}
+It is not user-friendly for the user to select dataset according to an energy range when the spectral axis is expressed in wavelength and meters. The units and quantities are not familiar to this community.
+Moreover the numerical representation of the spectral range in em\_min leads to quantities with many figures and a power as -18 not easily comparable with the current usage.
+
+\paragraph{t\_gti}
+The searching criteria in terms of time coverage require the list of stable/good time intervals to pick appropriate datasets.
+t\_min, t\_max is the global time span but t\_gti could contain the list of \gls{GTI} as a T\_MOC description following the Multi-Order-Coverage (MOC) \gls{IVOA} standard \citep{2022ivoa.spec.0727F}.
+This element could then be compared across data collections to make the data set selection via simple intersection or union operations in T\_MOC representation.
+On the data provider's side, the T-MOC element can be computed from the \gls{GTI} table in \gls{OGIP} or \gls{GADF} to produce the ObsCore t\_gti field.
+
+
+\subsubsection{Access and Description of IRFs}
+
+Each \gls{IRF} file can have an Access object from ObsCore DM to describe a link to the \gls{IRF} part of the data file.
+This can be reflected in an extension of ObsTAP TAP\_SCHEMA.
+
+In the \gls{TAP} service we could add an \gls{IRF} Table, with the following columns:
+
+\begin{itemize}
+    \item event-list datapublisher\_id
+    \item irf\_type, category of response: EffectiveArea, \gls{PSF}, etc.
+    \item irf\_description, one line explanation for the role of the file
+    \item Access.url, URL to point to the \gls{IRF}
+    \item Access.format, format of \gls{IRF}
+    \item Access.size, size of \gls{IRF} file
+\end{itemize}
+
+
+
+\section{Obscore table from Ian's Malta Obscore presentation}
+The following section is a placeholder and has been copied from Ian Evans Malta Interop presentation.  We are seeding it here to collect information on Obscore written by HEIG members to one spot.  Expect it to be edited/replaced - whatever makes sense for this doc.  See Table 1 below.
+
+%\pagebreak
+\begin{sidewaystable}
+  \begin{center}
+    \caption{Elements Already Present in Core ObsCore}\label{tab:core_elts}
+      \begin{tabular}{p{0.15\textwidth}p{0.10\textwidth}p{0.45\textwidth}p{0.29\textwidth}}
+      \sptablerule
+      \textbf{Element} & \textbf{HEA-specific Issue?} & \textbf{Description} & \textbf{Suggested Recommendation} \\\sptablerule
+%
+o\_ucd/o\_unit/ o\_calib\_status/ o\_stat\_error & Yes? & Most HEA event lists have multiple observables; these quantities should support multiple observables; setting o\_ucd = NULL for event lists as recommended is obscuring and does not facilitate data discovery & Modify these elements to support meaningful representation of DPs that include multiple observables \\
+%
+s\_fov/ s\_resolution/ em\_resolution & Maybe & These properties may be (strongly) dependent on particle energy, location within the FoV, $\ldots$ ({\em e.g.\/}, {\em Chandra\/} spatial resolution varies by a factor $50\times$ across the FoV) & Consider how to represent properties that are strongly dependent on other quantities and how to enable meaningful data discovery for these cases \\
+%
+calib\_level & No? & Many HEA event lists fall between calib\_levels 1 and 2 (spatial and temporal axes are calibrated physical quantities, but spectral axis is instrumental and requires application of responses); this is not always the case so it is beneficial to be able to differentiate ``1.5'' and 2 & Consider how to capture the calibration level of DPs that have the instrument signature partially removed  ({\em e.g.\/}, only for some axes) \\
+%
+dataproduct\_type & No & Limited set of dataproduct\_types don?t represent some common types of HEA or Advanced DPs; limitation on use of ``measurements'' means that value can?t be used for most ADPs; lack of a broad set of dataproduct\_types limits ability to perform meaningful data discovery & Add a wider set of dataproduct\-\_types in consultation with the multi-waveband community; remove caveat on use of measurements \\
+%
+t\_min/t\_max & No & Not useful for ADPs that combine multiple observations; see also t\_gti in Table~\ref{tab:addl_elts} & Modify these elements to support multiple disjoint time intervals \\
+%
+proposal\_id & No & Single valued proposal\_id may not work for ADPs that combine multiple observations & Modify proposal\_id to allow multiple values similar to other provenance properties (facility\_name, instrument\_name) \\
+%
+      \sptablerule
+      \end{tabular}
+  \end{center}
+\end{sidewaystable}
+%
+%
+%
+\begin{sidewaystable}
+  \begin{center}
+    \caption{Additional Elements}\label{tab:addl_elts}
+      \begin{tabular}{p{0.15\textwidth}p{0.10\textwidth}p{0.45\textwidth}p{0.29\textwidth}}
+      \sptablerule
+      \textbf{Element} & \textbf{HEA-specific Issue?} & \textbf{Description} & \textbf{Suggested Recommendation} \\\sptablerule
+%
+ev\_number & Yes & Number of events in an event list is a useful HEA dimensionality for data discovery & Add as HEA extension \\
+%
+energy\_min/ \hbox{energy\_max} & Yes & em\_min/em\_max in units of m do not work well for HEA, where the natural units are energy ({\em i.e.\/}, inverse wavelength); there are additional usability concerns for VHEA that may make em\_min/em\_max unusable & Consider adding energy\_min/ \hbox{energy\_max} as HEA extension \\
+%
+t\_gti & Yes? & t\_min/t\_max do not allow representation of multiple GTIs/STIs so queries on time may not be accurate & Consider solving as part of support for multi-valued t\_min/t\_max rather than adding a separate HEA-specific concept \\
+%
+irf\_type/ irf\_description etc. & No & HEA event list data products typically require associated DPs such as instrument response functions ({\em e.g.\/}, IRF, RMF, ARF) for analysis; HOWEVER, identification of associated DPs required to enable meaningful further analysis NOT a HEA-specific issue & May be soluble using datalink; alternatively consider adding (multi-valued) assocproduct\_type, assocproduct\_description etc. to core \\
+%
+      \sptablerule
+%
+access\_format & No & Additional access\_format MIME-types may be needed to support standardized HEA formats & Identify and request addition of appropriate MIME-types \\
+%
+UCDs & No & Additional UCDs may be needed to support some HEA observables; ({\em e.g.\/}, no UCD is defined for PHA) & Identify and request addition of appropriate UCDs \\
+%
+      \sptablerule
+      \end{tabular}
+  \end{center}
+\end{sidewaystable}
+
+
+\pagebreak
+\printglossaries
+
+\bibliography{VOHE-ObsCoreExtNote, ivoatex/docrepo, ivoatex/ivoabib}
+%\bibliographystyle{}
 
 \appendix
+
 \section{Changes from Previous Versions}
 
 No previous versions yet.
-% these would be subsections "Changes from v. WD-..."
-% Use itemize environments.
 
+\section{Contributions to the Note}
+
+The authors of this Note contributed to write and structure the text. However, the note was initiated and elaborated in several dedicated workshops, Interop meetings,  and in specific \gls{IVOA} \gls{HE} group meetings, involving more people. The \gls{IVOA} \gls{HE} group keeps track of its activities on an \gls{IVOA} web page: \url{https://wiki.ivoa.net/twiki/bin/view/IVOA/HEGroup}.
+
+Further material can be found with those links:
+\begin{itemize}
+    \item 2024-11-16: IVOA Malta meeting, DM session with 2 High Energy presentations (B. Khelifi/I. Evans), \url{https://wiki.ivoa.net/twiki/bin/view/IVOA/InterOpNov2024DM}
+    \item 2024-11-15: IVOA Malta Plenary, CSP Plenary session, \url{https://wiki.ivoa.net/twiki/bin/view/IVOA/InterOpNov2024CSPPlenary}
+    \item 2024-05-21: IVOA Sydney meeting, DM Session High Energy focus, \url{https://wiki.ivoa.net/twiki/bin/view/IVOA/InterOpMay2024DM}
+    \item 2023-06-28: IVOA standards for High Energy Astrophysics (French VO Workshop), \url{https://indico.obspm.fr/event/1963/}
+    \item 2023-05-11: IVOA Bologna meeting: presentation ("DM for High Energy astrophysics", M. Servillat) and first IVOA HE group meeting, \url{https://wiki.ivoa.net/internal/IVOA/IntropMay3023DM/2023-05-11_IVOA_meeting_-_VOHE.pdf}
+    \item 2022-10-11: Virtual Observatory and High Energy Astrophysics (French VO Workshop), \url{https://indico.obspm.fr/event/1489/}
+\end{itemize}
 
 % NOTE: IVOA recommendations must be cited from docrepo rather than ivoabib
 % (REC entries there are for legacy documents only)
-\bibliography{ivoatex/ivoabib,ivoatex/docrepo}
-
 
 \end{document}
