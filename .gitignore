@@ -1,18 +1,23 @@
+# ivoatex intermediate files
 *.blg
 *.toc
 *.out
 *.pdf
 *.aux
 *.bbl
-ivoatexmeta.tex
 *.log
-*.html
-*.zip
 *.fdb_latexmk
 *.fls
-gitmeta.tex
-*.swp
+*.glo
+*.ist
+ivoatexmeta.tex
 role_diagram.svg
+#
+#
+gitmeta.tex
+*.html
+*.zip
+*.swp
 
 # OS-specific
 .DS_Store

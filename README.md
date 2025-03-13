@@ -1,3 +1,5 @@
+[![PDF-Preview](https://img.shields.io/badge/Preview-PDF-blue)](../../releases/download/auto-pdf-preview/HighEnergyObsCoreExt.pdf)
+
 This document describes/defines HighEnergyObsCoreExt in the [Virtual
 Observatory](https://ivoa.net)
 

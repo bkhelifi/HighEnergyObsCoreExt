@@ -1,6 +1,6 @@
 \documentclass[11pt,a4paper]{ivoa}
 \input tthdefs
-\input gitmeta
+\IfFileExists{./gitmeta}{\input gitmeta }{\typeout{NOTICE: gitmeta.tex not found}}
 
 \title{IVOA Obscore Extension for HE data}
 
