@@ -136,43 +136,6 @@ An IVOA vocabulary is being developped for Product Types\footnote{https://www.iv
 
 In the context of \gls{HE}, we propose to redefine {\bf event-list}, and add new terms for response functions, as well as for several advanced data products found in \gls{HE} archives (see section XXX). The concept of an {\bf event-bundle} containing an event list and the relevant associated data products is also important for HE data dissemination.
 
-%----- from section 3.1, to be moved to section 5 on Vocabularies
-
-We propose to add the following {\em dataproduct\_type}s to better define a HE {\bf event-list} and a bundle that includes the {\bf event-list} and associated ancillary data:
-
-\begin{quote}
-{\bf event-list}: A collection of observed events, such as incoming HE particles, where an event is typically characterized by a spatial position, a time, and a spectral value ({\em e.g.\/}, an energy, a channel, a pulse height).
-\end{quote}
-
-\begin{quote}
-{\bf event-bundle}: An event-bundle dataset is a complex object containing an {\bf event-list} and multiple files or other substructures that are products necessary to analyze the {\bf event-list}. Data in an event-bundle may thus be used to produce higher level data products such as images or spectra.
-\end{quote}
-
-An {\bf event-bundle} might for example consist of an {\bf event-list} and the associated {\bf response-function}s (see below) used to calibrate the dataset; alternatively an {\bf event-bundle} may include the {\bf event-list}  and associated ancillary data products necessary for the user to {\em create\/} the {\bf response-function}s (for those cases where detailed knowledge of the scientific use case --- for example, the user's selection of events --- may be required to compute the responses).
-
-In addition to {\em dataproduct\_type\/}s that focus on event data, we note that existing ObsCore definitions do not adequately span the breadth of advanced data products (with {\em calib\_level\/}${}\ge 3$ that may be generated from astronomical observations.   The computational complexity of analyzing HEA data robustly in the extreme Poisson regime ({\em e.g.\/}, Bayesian X-ray aperture photometry applied simultaneously to multiple overlapping detections and observations) means that data providers may choose to provide such analysis products directly to the end user.  For example, the {\em Chandra\/} Source Catalog includes 38 types of advanced data products  (for a total of $\sim\!90$ million files) and $\sim\!50\%$ of these data product types are not well represented by a {\em dataproduct\_type} value that allows for meaningful data discovery.  Users will certainly want to discover these data products independently from the associated observation data (and many of these data products combine data from multiple observations).  We therefore propose the following additional {\em dataproduct\_type}s for these advanced data products, and note that these {\em dataproduct\_type}s will certainly be useful independent of waveband ({\em i.e.\/}, they can be equally applicable to UV/optical, IR, and radio datasets:
-
-\begin{quote}
-{\bf draws}:  A dataset that represents draws computed from a probability distribution, for example the Markov chain Monte Carlo (MCMC) draws used when computing the Bayesian marginal probability density function for a random variable.  The draws can be interpreted to provide a robust estimation of the probability distribution of variable, and correlations between the draws provide information about how well the draws converge to the parent probability distribution.
-\end{quote}
-
-\begin{quote}
-{\bf pdf}: A dataset that represents the probability density function of a quantity, for example the Bayesian marginal probability density function for a random variable.  The probability density function provides a robust estimation of the variable and allows arbitrary confidence intervals to be computed directly from the distribution.
-\end{quote}
-
-\begin{quote}
-{\bf region}: A dataset that includes an encoding of (one or more) regions of parameter space, for example a spatial region or a region of phase space covered by a dataset.  The set of dimensions represented by the region can be arbitrary.
-\end{quote}
-
-\begin{quote}
-{\bf response-function}: A dataset that represents a mapping from a physical quantity to an observable.  For HEA this may be the components of the composite Instrument Response Function (IRF)\footnote{We try to avoid using the term IRF in a normative sense since historical usage across the HEA community (and from facility to facility) varies.  In some cases IRF has been used to mean specifically the product of the ARF and RMF, whereas in other cases IRF has been used more generally to mean {\em any\/} instrumental response function regardless of type.} such as an Auxiliary Response File (ARF), Redistribution Matrix File (RMF), Effective Area (AEFF), Energy Dispersion (EDISP), and so on.  The Point Spread Function (PSF) is a response-function that is generally applicable across multiple wavebands.  While these datasets may generally be represented as an {\em N\/}-dimensional data cube, designating them as {\bf response-function}s enhances data discovery for very common types of HEA dataset.
-\end{quote}
-
-The {\bf measurements} data product type is quite useful for many different types of advanced data products (that may be derived from multiple observations) but users of those products often may not be interested the progenitor datasets, especially if many advanced data products are extracted from a single or a few progenitors ({\em e.g.\/}, {\bf measurements} associated with sources detected in a single observation field).  We propose to delete the caveat associated with {\em dataproduct\_type\/} = {\bf measurements} type in the ObsCore IVOA Recommendation (\S~4.1.1) that requires the derived data products be exposed ``{\bf together} with the progenitor observation dataset''.
-
-%-----
-
-
 
 \subsection{{\em dataproduct\_subtype}}
 
