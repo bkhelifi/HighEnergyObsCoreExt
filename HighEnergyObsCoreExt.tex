@@ -82,7 +82,7 @@
 \begin{document}
 
 \begin{abstract}
-This is a proposed extension to the ObsCore specification for data description, discovery and selection of High Energy Astrophysics (HEA) data, and includes proposed updates to the data product vocabulary, UCDs, and MIME-types to support discovery of HEA data.  
+This is a proposed extension to the ObsCore specification for data description, discovery and selection of High Energy Astrophysics (HEA) data, and includes proposed updates to the data product vocabulary, UCDs, and MIME-types to support discovery of HEA data.
 \end{abstract}
 
 
@@ -121,11 +121,22 @@ We note that many properties, including spatial and spectral coverage and resolu
 
 \subsection{{\em dataproduct\_type}}\label{sec:dataproduct_type}
 
-The attribute {\em dataproduct\_type\/} provides a high level scientific classification of the data product and is of primary importance for data discovery, especially when there may be many different types of data product associated with an observation\footnote{We use the term ``observation'' in the broad sense, as is done in the ObsCore Recommendation.  We note that in this context an ``observation'' may not correspond to a single pointed observation defined in the traditional sense.} (as is often the case for HEA datasets).  The current ObsCore Recommendation defines an {\bf event} {\em dataproduct\_type} as:
+The attribute {\em dataproduct\_type\/} provides a high level scientific classification of the data product and is of primary importance for data discovery, especially when there may be many different types of data product associated with an observation\footnote{We use the term ``observation'' in the broad sense, as is done in the ObsCore Recommendation.  We note that in this context an ``observation'' may not correspond to a single pointed observation defined in the traditional sense.} (as is often the case for HEA datasets).
+
+The ObsCore v1.1 recommendation \citep{2017ivoa.spec.0509L} only defines an {\bf event} {\em dataproduct\_type} as:
 
 \begin{quote}
 {\bf event}: an event-counting ({\em e.g.\/}, X-ray or other high energy) dataset of some sort. Typically this is instrumental data, {\em i.e.\/}, ``event data''.  An event dataset is often a complex object containing multiple files or other substructures. An event dataset may contain data with spatial, spectral, and time information for each measured event, although the spectral resolution (energy) is sometimes limited. Event data may be used to produce higher level data products such as images or spectra.
 \end{quote}
+
+An IVOA vocabulary is being developped for Product Types\footnote{https://www.ivoa.net/rdf/product-type} were the term {\bf event-list} is proposed:
+\begin{quote}
+{\bf event-list}: a collection of observed events, such as incoming high-energy particles. A row in an event list is typically characterised by a spatial position, a time and an energy.
+\end{quote}
+
+In the context of \gls{HE}, we propose to redefine {\bf event-list}, and add new terms for response functions, as well as for several advanced data products found in \gls{HE} archives (see section XXX). The concept of an {\bf event-bundle} containing an event list and the relevant associated data products is also important for HE data dissemination.
+
+%----- from section 3.1, to be moved to section 5 on Vocabularies
 
 We propose to add the following {\em dataproduct\_type}s to better define a HE {\bf event-list} and a bundle that includes the {\bf event-list} and associated ancillary data:
 
@@ -157,11 +168,17 @@ In addition to {\em dataproduct\_type\/}s that focus on event data, we note that
 {\bf response-function}: A dataset that represents a mapping from a physical quantity to an observable.  For HEA this may be the components of the composite Instrument Response Function (IRF)\footnote{We try to avoid using the term IRF in a normative sense since historical usage across the HEA community (and from facility to facility) varies.  In some cases IRF has been used to mean specifically the product of the ARF and RMF, whereas in other cases IRF has been used more generally to mean {\em any\/} instrumental response function regardless of type.} such as an Auxiliary Response File (ARF), Redistribution Matrix File (RMF), Effective Area (AEFF), Energy Dispersion (EDISP), and so on.  The Point Spread Function (PSF) is a response-function that is generally applicable across multiple wavebands.  While these datasets may generally be represented as an {\em N\/}-dimensional data cube, designating them as {\bf response-function}s enhances data discovery for very common types of HEA dataset.
 \end{quote}
 
-The {\bf measurements} data product type is quite useful for many different types of advanced data products (that may be derived from multiple observations) but users of those products often may not be interested the progenitor datasets, especially if many advanced data products are extracted from a single or a few progenitors ({\em e.g.\/}, {\bf measurements} associated with sources detected in a single observation field).  We propose to delete the caveat associated with {\em dataproduct\_type\/} = {\bf measurements} type in the ObsCore IVOA Recommendation (\S~4.1.1) that requires the derived data products be exposed ``{\bf together} with the progenitor observation dataset''.  
+The {\bf measurements} data product type is quite useful for many different types of advanced data products (that may be derived from multiple observations) but users of those products often may not be interested the progenitor datasets, especially if many advanced data products are extracted from a single or a few progenitors ({\em e.g.\/}, {\bf measurements} associated with sources detected in a single observation field).  We propose to delete the caveat associated with {\em dataproduct\_type\/} = {\bf measurements} type in the ObsCore IVOA Recommendation (\S~4.1.1) that requires the derived data products be exposed ``{\bf together} with the progenitor observation dataset''.
+
+%-----
+
+
 
 \subsection{{\em dataproduct\_subtype}}
 
-The optional attribute {\em dataproduct\_subtype} may be used by the data provider to specify additional information about the nature of the data product.  For some datasets this attribute may specify the data level ({\em e.g.\/}, DL3--6), or may be combined with {\em dataproduct\_type\/} to more precisely define the content of the dataset ({\em e.g.\/}, {\em dataproduct\_type\/} = {\bf image}${}+{}${\em dataproduct\_subtype\/} = {\bf exposuremap}, or {\em dataproduct\_type\/} = {\bf response-function}${}+{}${\em dataproduct\_subtype\/} = {\bf rmf}), which is particularly useful and important for discovery of advanced data products.  A vocabulary of such data product (sub-)types should be developed to support discovery of advanced data products.
+The optional attribute {\em dataproduct\_subtype} may be used by the data provider to specify additional information about the nature of the data product. For some datasets this attribute may specify the data level ({\em e.g.\/}, DL3--6, see \citealt{2024ivoa.note.heig}, \S3.1.2), or may be combined with {\em dataproduct\_type\/} to more precisely define the content of the dataset ({\em e.g.\/}, {\em dataproduct\_type\/} = {\bf image}${}+{}${\em dataproduct\_subtype\/} = {\bf exposuremap}, or {\em dataproduct\_type\/} = {\bf response-function}${}+{}${\em dataproduct\_subtype\/} = {\bf rmf}), which is particularly useful and important for discovery of some advanced data products.  A vocabulary of such data product (sub-)types should be developed to support discovery of advanced data products.
+
+% but rmf is proposed in product-type...
 
 \subsection{{\em calib\_level}}
 
@@ -185,7 +202,7 @@ For non-pointing instruments (which may include all-sky instruments such as KM3N
 
 We propose that {\em s\_calib\_status} encode the calibration status of an {\bf event-list} dataset's spatial axes.  Where multiple spatial axes are included in a dataset ({\em e.g.\/}, physical detector pixel coordinates, virtual detector coordinates corrected for distortions, world coordinates) then we recommend that the data provider use the coordinate system that is most likely to be preferred by the end user (typically the most fully calibrated spatial axes) to define {\em s\_calib\_status\/}.
 
-Under the (reasonable) assumption that an end-user searching for {\bf event-bundle} datasets is typically querying based on the properties of the primary {\bf event-list} we suggest that those values also be used for the {\bf event-bundle}.  However, the data provider should ultimately decide which value best describes their {\bf event-bundle} dataset.  
+Under the (reasonable) assumption that an end-user searching for {\bf event-bundle} datasets is typically querying based on the properties of the primary {\bf event-list} we suggest that those values also be used for the {\bf event-bundle}.  However, the data provider should ultimately decide which value best describes their {\bf event-bundle} dataset.
 
 For dataset types that do not not encode sky coordinates, we suggest setting this value to NULL\null.
 
@@ -193,7 +210,7 @@ For dataset types that do not not encode sky coordinates, we suggest setting thi
 
 We propose that {\em t\_calib\_status}  encode the calibration status of an {\bf event-list} dataset's time axis.  Where multiple time axes are included in a dataset ({\em e.g.\/}, instrument counter, absolute time) then we recommend that the data provider use the coordinate system that is most likely to be preferred by the end user (typically the most fully calibrated time axis) to define {\em t\_calib\_status\/}.
 
-Under the (reasonable) assumption that an end-user searching for {\bf event-bundle} datasets is typically querying based on the properties of the primary {\bf event-list} we suggest that those values also be used for the {\bf event-bundle}.  However, the data provider should ultimately decide which value best describes their {\bf event-bundle} dataset.  
+Under the (reasonable) assumption that an end-user searching for {\bf event-bundle} datasets is typically querying based on the properties of the primary {\bf event-list} we suggest that those values also be used for the {\bf event-bundle}.  However, the data provider should ultimately decide which value best describes their {\bf event-bundle} dataset.
 
 For dataset types that do not not encode time coordinates, we suggest setting this value to NULL\null.
 
@@ -201,7 +218,7 @@ For dataset types that do not not encode time coordinates, we suggest setting th
 
 We propose that {\em em\_calib\_status}  encode the calibration status of an {\bf event-list} dataset's spectral axis.  Where multiple spectral axes are included in a dataset ({\em e.g.\/}, PHA, PI, energy) then we recommend that the data provider use the coordinate system that is most likely to be preferred by the end user (typically the most fully calibrated spectral axis) to define {\em t\_calib\_status\/}.
 
-Under the (reasonable) assumption that an end-user searching for {\bf event-bundle} datasets is typically querying based on the properties of the primary {\bf event-list} we suggest that those values also be used for the {\bf event-bundle}.  However, the data provider should ultimately decide which value best describes their {\bf event-bundle} dataset.  
+Under the (reasonable) assumption that an end-user searching for {\bf event-bundle} datasets is typically querying based on the properties of the primary {\bf event-list} we suggest that those values also be used for the {\bf event-bundle}.  However, the data provider should ultimately decide which value best describes their {\bf event-bundle} dataset.
 
 For dataset types that do not not encode spectral coordinates, we suggest setting this value to NULL\null.
 
@@ -271,7 +288,7 @@ Some HEA instruments allow data to be reduced/analyzed in multiple ways and thes
 
 \section{Vocabulary Enhancements}
 
-While the IVOA Data Product Type Vocabulary (\url{http://www.ivoa.net/rdf/product-type}) provides terms, labels, and descriptions for many types of astronomical data products, there are some additions and changes that are appropriate to better support HEA datasets.  
+While the IVOA Data Product Type Vocabulary (\url{http://www.ivoa.net/rdf/product-type}) provides terms, labels, and descriptions for many types of astronomical data products, there are some additions and changes that are appropriate to better support HEA datasets.
 
 We propose to add vocabulary entries for the data product types outlined in \S~\ref{sec:dataproduct_type} ({\em i.e.\/}, {\bf event-bundle}, {\bf draws}, {\bf pdf}, {\bf region}, {\bf response-function}) and also propose to slightly modify the existing definition of {\bf event-list} so that it aligns more accurately with the definition in \S~\ref{sec:dataproduct_type}.  Additionally, we propose to add several more specific entries to the data product type vocabulary that specialize these types (especially {\bf response-function}).  Any future revision of the ObsCore Recommendation to use the IVOA Data Product Type Vocabulary in preference to the enumerated values for {\em dataproduct\_type\/} would profit from these additional vocabulary entries.
 
