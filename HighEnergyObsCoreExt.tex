@@ -134,7 +134,7 @@ An IVOA vocabulary is being developped for Product Types\footnote{https://www.iv
 {\bf event-list}: a collection of observed events, such as incoming high-energy particles. A row in an event list is typically characterised by a spatial position, a time and an energy.
 \end{quote}
 
-In the context of \gls{HE}, we propose to redefine {\bf event-list}, and add new terms for response functions, as well as for several advanced data products found in \gls{HE} archives (see section XXX). The concept of an {\bf event-bundle} containing an event list and the relevant associated data products is also important for HE data dissemination.
+In the context of \gls{HE}, we propose to redefine {\bf event-list}, and add new terms for response functions, as well as for several advanced data products found in \gls{HE} archives (see section \ref{sec:voc_product_type}). The concept of an {\bf event-bundle} containing an event list and the relevant associated data products is also important for HE data dissemination.
 
 
 \subsection{{\em dataproduct\_subtype}}
@@ -150,6 +150,11 @@ ObsCore defines calibration {\bf Level 1} as ``Instrumental data in a standard f
 For {\bf event-list}s, we propose that the calibration status of the spatial/spectral/time data axes be identified using the appropriate axis {\em calib\_status\/} keyword ({\em s\_calib\_status\/} for the spatial axes, {\em em\_calib\_status\/} for the spectral axis, and {\em t\_calib\_status\/} for the time axis).
 
 %\subsection{{\em obs\_collection}}
+
+\subsection{{\em access\_url}}
+
+Given the complexity and number of HE data products, we propose to point the access\_url either to a file (e.g. an event-list or an event-bundle), or to a DataLink service that will provide links to the data and to associated data (e.g. response functions).
+
 
 \subsection{{\em access\_format}}
 
