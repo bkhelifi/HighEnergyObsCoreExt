@@ -8,7 +8,7 @@
 % interest groups.
 \ivoagroup{High Energy Interest Group}
 
-\author{The IVOA High Energy Interest Group}
+\author{I. Evans, M. Servillat, J. Evans, B. Khélifi, M. Louys, M. Kettenis, F. Bonnarel, L. Michel, B. Boisson, M. Cresitello-Dittmar, the IVOA High Energy Interest Group}
 
 \editor{The IVOA High Energy Interest Group}
 
@@ -82,7 +82,7 @@
 \begin{document}
 
 \begin{abstract}
-This is a proposed extension to the ObsCore specification for data description, discovery and selection of High Energy Astrophysics (HEA) data, and includes proposed updates to the data product vocabulary, UCDs, and MIME-types to support discovery of HEA data.  
+This is a proposed extension to the ObsCore specification for data description, discovery and selection of High Energy Astrophysics (HEA) data, and includes proposed updates to the vocabulary of data products, UCDs and MIME-types to support discovery of HEA data.  
 \end{abstract}
 
 
@@ -101,9 +101,9 @@ The \href{https://www.ivoa.net}{International Virtual Observatory Alliance (IVOA
 
 \section{Introduction}
 
-The \gls{IVOA} \gls{HEIG} was formed in the Fall of 2024, and developed an IVOA Note (Servillat, M., et al, 2024) that explores the connections between the \gls{VO} and \gls{HEA}. The HEIG Note includes an outline of several important topics that has formed a roadmap for the group. An ObsCore \citep{2017ivoa.spec.0509L} extension for \gls{HE} data is the first priority in order to meet the needs of HEA, and to coincide with similar work being carried out by the Radio IG, Time Domain IG, and discussions on DM standards.
+The \gls{IVOA} \gls{HEIG} was formed in the Fall of 2024, and developed an \gls{IVOA} Note \citep{2024ivoa.note.heig} that explores the connections between the \gls{VO} and \gls{HEA}. Here, the \gls{HEA} covers experiments and observatories from the X-ray range up to the PeV range, as well as the astrophysical neutinos above the TeV range, called here the \gls{HE} domain. The HEIG Note includes an outline of several important topics that has formed a roadmap for the group. An ObsCore \citep{2017ivoa.spec.0509L} extension for \gls{HE} data is the first priority in order to meet the needs of HEA, and to coincide with similar work being carried out by the Radio IG, Time Domain IG, and discussions on DM standards, such that current and future \gls{HEA} experiments and observatories are able to release data on the \gls{VO}.
 
-The goal is to define an extension to ObsCore to enable a more complete description of HE data, and that will lead to better discovery and selection of HE data through IVOA interfaces.  We explore elements needed to reliably discover HE data and highlight commonalities with  proposed Radio and/or Time extensions.  We suggest that if an attribute is unique to HE data then that element should appear in an HE ObsCore extension, whereas if an attribute makes sense for more that one domain and can be shared across those domains then that element should be added to the base ObsCore model.  We will make recommendations in both of these categories.  We also discuss enhancements to the data product vocabulary, UCDs, MIME-types, and Datalink that are helpful (or in some cases necessary) to correctly represent HE data where these are related to ObsCore definitions or usage. Topics related to the Registry are currently outlined in the proposed Radio extension document and are not discussed here.
+The goal is to explore elements needed to reliably discover and select \gls{HE} data through \gls{IVOA} interfaces. It implies to define an extension to ObsCore with the possibility to use the DataLink mechanism and to enchance vocabularies of keywords for ObsCore and DataLink. We suggest that, if an attribute is unique to \gls{HE} data, that element should appear in an \gls{HE} ObsCore extension. Whereas if an attribute makes sense for more that one domain and can be shared across those domains, then that element should be added to the base ObsCore model. This note proposes recommendations in both of these categories. We also discuss enhancements to the vocabulary of data products, DataLink semantics, UCDs and MIME-types to correctly represent \gls{HE} data. Topics related to the Registry are currently outlined in the proposed Radio extension document and are not discussed here.
 
 
 \section{High Energy Astrophysics Data}
