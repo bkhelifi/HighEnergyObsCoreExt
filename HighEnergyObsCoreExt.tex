@@ -119,7 +119,8 @@ The ObsCore representation of HEA {\bf event-list} data products is described in
 
 We note that many properties, including spatial and spectral coverage and resolution can vary strongly with energy and off-axis angle.
 
-\subsection{{\em dataproduct\_type}}\label{sec:dataproduct_type}
+\subsection{{\em dataproduct\_type}}
+\label{sec:dataproduct_type}
 
 The attribute {\em dataproduct\_type\/} provides a high level scientific classification of the data product and is of primary importance for data discovery, especially when there may be many different types of data product associated with an observation\footnote{We use the term ``observation'' in the broad sense, as is done in the ObsCore Recommendation.  We note that in this context an ``observation'' may not correspond to a single pointed observation defined in the traditional sense.} (as is often the case for HEA datasets).
 
@@ -129,7 +130,7 @@ The ObsCore v1.1 recommendation \citep{2017ivoa.spec.0509L} only defines an {\bf
 {\bf event}: an event-counting ({\em e.g.\/}, X-ray or other high energy) dataset of some sort. Typically this is instrumental data, {\em i.e.\/}, ``event data''.  An event dataset is often a complex object containing multiple files or other substructures. An event dataset may contain data with spatial, spectral, and time information for each measured event, although the spectral resolution (energy) is sometimes limited. Event data may be used to produce higher level data products such as images or spectra.
 \end{quote}
 
-An IVOA vocabulary is being developped for Product Types\footnote{https://www.ivoa.net/rdf/product-type} were the term {\bf event-list} is proposed:
+An IVOA vocabulary is being developped for Product Types\footnote{https://www.ivoa.net/rdf/product-type} were the term {\bf event-list} is proposed as a replacement:
 \begin{quote}
 {\bf event-list}: a collection of observed events, such as incoming high-energy particles. A row in an event list is typically characterised by a spatial position, a time and an energy.
 \end{quote}
@@ -139,13 +140,17 @@ In the context of \gls{HE}, we propose to redefine {\bf event-list}, and add new
 
 \subsection{{\em dataproduct\_subtype}}
 
-The optional attribute {\em dataproduct\_subtype} may be used by the data provider to specify additional information about the nature of the data product. For some datasets this attribute may specify the data level ({\em e.g.\/}, DL3--6, see \citealt{2024ivoa.note.heig}, \S3.1.2), or may be combined with {\em dataproduct\_type\/} to more precisely define the content of the dataset ({\em e.g.\/}, {\em dataproduct\_type\/} = {\bf image}${}+{}${\em dataproduct\_subtype\/} = {\bf exposuremap}, or {\em dataproduct\_type\/} = {\bf response-function}${}+{}${\em dataproduct\_subtype\/} = {\bf rmf}), which is particularly useful and important for discovery of some advanced data products.  A vocabulary of such data product (sub-)types should be developed to support discovery of advanced data products.
+The optional attribute {\em dataproduct\_subtype} may be used by the data provider to specify additional information about the nature of the data product. For some datasets this attribute may specify the data level ({\em e.g.\/}, DL3--6, see \citealt{2024ivoa.note.heig}, \S3.1.2), or may be combined with {\em dataproduct\_type\/} to more precisely define the content of the dataset ({\em e.g.\/}, {\em dataproduct\_type\/} = {\bf image}${}+{}${\em dataproduct\_subtype\/} = {\bf exposuremap}).  A vocabulary of such data product (sub-)types should be developed to support discovery of advanced data products.
 
 % but rmf is proposed in product-type...
 
 \subsection{{\em calib\_level}}
 
-ObsCore defines calibration {\bf Level 1} as ``Instrumental data in a standard format (FITS, VOTable, SDFITS, ASDM, etc.) which could be manipulated with standard astronomical packages.'' and {\bf Level 2} as ``Calibrated, science ready data with the instrument signature removed.''  However, many HEA {\bf event-list}s include spatial and time axes that are calibrated physical quantities, but the spectral axis is instrumental and requires application of the IRFs to remove this signature.  This is typically done because the {\bf response-funtion}s can depend on the choice of region (spatial/time) from which the events are extracted (especially for telescope/detector combinations where the telescope position dithers on the sky during the exposure), which depends on the specific science case and therefore cannot be determined {\em a priori\/}.  Such {\bf event-list}s fall ``between'' {\em calib\_level\/} 1 and 2.  However, other {\bf event-list}s may not have any calibrated axes or may have all axes calibrated, and it is important to be able to differentiate between these for data discovery.  While the value for {\em calib\_level\/} for any data product is left for the data provider to determine, we {\em suggest\/} that individual data providers set {\em calib\_level\/} = 1 if an {\bf event-list} is considered to be ``uncalibrated'' according to normal usage for their data products and set {\em calib\_level\/} = 2 if an {\bf event-list} is considered to be ``calibrated'' according to normal usage for their data products.
+ObsCore defines calibration {\bf Level 1} as ``Instrumental data in a standard format (FITS, VOTable, SDFITS, ASDM, etc.) which could be manipulated with standard astronomical packages.'' and {\bf Level 2} as ``Calibrated, science ready data with the instrument signature removed.''
+
+However, many HEA {\bf event-list}s include spatial and time axes that are calibrated physical quantities, but the spectral axis is instrumental and requires application of the IRFs to remove this signature.  This is typically done because the {\bf response-funtion}s can depend on the choice of region (spatial/time) from which the events are extracted (especially for telescope/detector combinations where the telescope position dithers on the sky during the exposure), which depends on the specific science case and therefore cannot be determined {\em a priori\/}.  Such {\bf event-list}s fall ``between'' {\em calib\_level\/} 1 and 2.
+
+On the other hand, other {\bf event-list}s may not have any calibrated axes or may have all axes calibrated, and it is important to be able to differentiate between these for data discovery.  While the value for {\em calib\_level\/} for any data product is left for the data provider to determine, we suggest that individual data providers set {\em calib\_level\/} = 1 if an {\bf event-list} is considered to be ``uncalibrated'' according to normal usage for their data products and set {\em calib\_level\/} = 2 if an {\bf event-list} is considered to be ``calibrated'' according to normal usage for their data products.
 
 For {\bf event-list}s, we propose that the calibration status of the spatial/spectral/time data axes be identified using the appropriate axis {\em calib\_status\/} keyword ({\em s\_calib\_status\/} for the spatial axes, {\em em\_calib\_status\/} for the spectral axis, and {\em t\_calib\_status\/} for the time axis).
 
@@ -153,7 +158,11 @@ For {\bf event-list}s, we propose that the calibration status of the spatial/spe
 
 \subsection{{\em access\_url}}
 
-Given the complexity and number of HE data products, we propose to point the access\_url either to a file (e.g. an event-list or an event-bundle), or to a DataLink service that will provide links to the data and to associated data (e.g. response functions).
+Given the complexity and number of HE data products, we propose to point the access\_url either to a file directly (e.g. the event-list or an event-bundle), or to a DataLink service that will provide links to the data and to associated data (e.g. response functions).
+
+In case Datalinks are provided, it should be indicated that the URL points to a Datalink service (via the access\_format probably).
+
+If the access\_url points to a bundle, an issue is that the detailed content of the bundle is not directly exposed, we thus see an advantage in using a DataLink service.
 
 
 \subsection{{\em access\_format}}
