@@ -271,7 +271,7 @@ Some HEA instruments allow data to be reduced/analyzed in multiple ways and thes
 
 \section{Vocabulary Enhancements}
 
-\subsection{Data Product Type Vocabulary}
+\subsection{Evolution of the Data Product Type vocabulary}
 \label{sec:voc_product_type}
 
 The IVOA Data Product Type Vocabulary (\url{http://www.ivoa.net/rdf/product-type}) provides terms, labels, and descriptions for many types of astronomical data products. However, there are some additions and changes that are appropriate to better support HEA datasets.
@@ -281,16 +281,20 @@ The IVOA Data Product Type Vocabulary (\url{http://www.ivoa.net/rdf/product-type
 
 %----- from section 3.1, moved to section 5 on Vocabularies
 
+\subsubsection{Event list}
+
 We first propose to better define an {\bf event-list}:
 
 \begin{quote}
 {\bf event-list}: A dataset containing a collection of observed events, such as incoming HE particles, where an event is typically characterized by a spatial position, a time, and a spectral value ({\em e.g.\/}, an energy, a channel, a pulse height)
 \end{quote}
 
-We then propose to add the following product types to define the different response functions generally used in HE:
+\subsubsection{Response functions}
+
+We then propose to add the following product types to define the different response functions (e.g. \glspl{IRF}) generally used in HE:
 
 \begin{quote}
-{\bf response-function}: A dataset that maps a physical quantity to an observable.
+{\bf response-function}: A dataset that maps a physical quantity to an observable. Narrower terms can be used to specify the type of response function.
 %This term is mainly intended for retrieval. To annotate datasets, use a narrower term.
 \end{quote}
 
@@ -323,20 +327,19 @@ We then propose to add the following product types to define the different respo
 {\bf rmf}: A dataset that records the probability density function mapping from energy space into detector pulse height (or position) space.\footref{fn:ogip92002}.
 \end{quote}
 
+\subsubsection{Event bundle}
 
-
-
-We finally propose a term to define a bundle, that includes the {\bf event-list} and associated ancillary data:
-
-\begin{quote}
-{\bf event-bundle}: An event-bundle dataset is a complex object containing an {\bf event-list} and multiple files or other substructures that are products necessary to analyze the {\bf event-list}. Data in an event-bundle may thus be used to produce higher level data products such as images or spectra.
-\end{quote}
+Some use cases imply the access to an {\bf event-bundle}, a bundle of datasets that includes the {\bf event-list} and associated  data:
 
 \begin{quote}
-{\bf event-bundle}: An event-bundle dataset is a complex object containing an {\bf event-list} and multiple files or other substructures that are products necessary to analyze the {\bf event-list}.
+{\bf event-bundle}: An event-bundle dataset is a complex object containing an {\bf event-list} and multiple files or other substructures that are products necessary to analyze the {\bf event-list}. Data in an event-bundle may thus be used to produce calibrated, higher level data products such as images or spectra.
 \end{quote}
 
-An {\bf event-bundle} might for example consist of an {\bf event-list} and the associated {\bf response-function}s used to calibrate the dataset; alternatively an {\bf event-bundle} may include the {\bf event-list}  and associated ancillary data products necessary for the user to {\em create\/} the {\bf response-function}s (for those cases where detailed knowledge of the scientific use case --- for example, the user's selection of events --- may be required to compute the responses).
+An {\bf event-bundle} might for example consist of an {\bf event-list} and the associated {\bf response-function}s used to calibrate the dataset.
+%; alternatively an {\bf event-bundle} may include the {\bf event-list}  and associated ancillary data products necessary for the user to {\em create\/} the {\bf response-function}s (for those cases where detailed knowledge of the scientific use case --- for example, the user's selection of events --- may be required to compute the responses).
+It may also contain provenance information, and preview images or plots.
+
+\subsubsection{Advanced data products}
 
 In addition to product types that focus on event data, we note that existing ObsCore definitions do not adequately span the breadth of advanced data products (with {\em calib\_level\/}${}\ge 3$ that may be generated from astronomical observations. The computational complexity of analyzing HE data robustly in the extreme Poisson regime ({\em e.g.\/}, Bayesian X-ray aperture photometry applied simultaneously to multiple overlapping detections and observations) means that data providers may choose to provide such analysis products directly to the end user.
 
@@ -359,9 +362,9 @@ The {\bf measurements} data product type is quite useful for many different type
 
 %-----
 
-The proposed vocabulary entries are listed in Table~\ref{tab:dp_vocabulary}.
+\subsection{Summary table}
 
-Finally, we propose to clarify the terms that use the word ``flux'' in the description (currently {\bf light-curve}, {\bf polarization-resolved-dataset}, {\bf polarized-spectrum}, and {\bf spectrum}) to determine whether they are applicable to HEA data.  The issue is that the term ``flux'' is not defined, and the standard astronomical definition of ``flux'' for at least the last century is an energy flux (with SI units $\rm W\,m^{-2}$).  This interpretation is bolstered by the statements ``flux or magnitude'' applied to several of the descriptions since optical/IR magnitude and energy flux density are tightly related.  However, with this definition many HEA data products (that typically have units of counts) would not satisfy the descriptions of a light-curve or a spectrum (for example), event though common usage in the HEA community would term the corresponding products ``light-curve'' or ``spectrum''.  Restating the descriptions to explicitly state ``Particle or energy flux or magnitude'' where appropriate would resolve this ambiguity.
+The proposed vocabulary entries are listed in Table~\ref{tab:dp_vocabulary} with their label and parents.
 
 %\begin{landscape}
 \begin{longtable}{p{0.3\linewidth}p{0.3\linewidth}p{0.3\linewidth}}
@@ -381,35 +384,71 @@ Finally, we propose to clarify the terms that use the word ``flux'' in the descr
 {\bf response-function} & Response Function & \cr
 {\bf rmf} &\raggedright Redistribution Matrix File & \#response-function, \#pdf \cr
 \sptablerule
-\caption{IVOA Data Product Type Vocabulary Additions}
+\caption{IVOA Data Product Type Vocabulary extension}
 \label{tab:dp_vocabulary}
 \end{longtable}
 %\end{landscape}
 
 
-\section{UCD Enhancements}\label{sec:UCDs}
+\subsubsection{Clarification of flux in some term definitions}
 
-\subsection{Pulse Height}
+We propose to clarify the terms that use the word ``flux'' in the description of some terms, currently {\bf light-curve}, {\bf polarization-resolved-dataset}, {\bf polarized-spectrum}, and {\bf spectrum}, to determine whether they are applicable to HEA data.
+
+The issue is that the term ``flux'' is not defined, and the standard astronomical definition of ``flux''
+%for at least the last century
+is an energy flux (with SI units $\rm W\,m^{-2}$).  This interpretation is bolstered by the statements ``flux or magnitude'' applied to several of the descriptions since optical/IR magnitude and energy flux density are tightly related.  However, with this definition many HEA data products (that typically have units of counts) would not satisfy the descriptions of a light-curve or a spectrum, even though those terms are commonly used by the HEA community.
+
+Restating the descriptions to explicitly state ``Particle or energy flux or magnitude'' where appropriate would resolve this ambiguity.
+
+
+\subsection{UCD Enhancements}\label{sec:UCDs}
+
+\subsubsection{Pulse Height}
 
 For many X-ray and gamma-ray instruments the signal observed in a given detector spectral channel is the result of event counting and would typically be recorded as a Pulse Height Amplitude (PHA), or perhaps a Pulse Invariant (PI) value that is calculated from PHA by applying an appropriate gain calibration.  The PHA (or PI) can be related to the incident particle energy by applying the appropriate {\bf response-function}, and higher data calibration level products may replace or augment these values with quantities such as energy, or perhaps particle or energy flux.
 
-The is currently no UCD defined for a raw pulse height amplitude measure like PHA (or PI)\null.  PHA is such an important quantity to HEA datasets that we propose adding a new UCD {\em phys.pulseHeight\/} for these raw data values.  We note that the background signal (both of instrumental and cosmological origin) may be significant for many HE detectors and so the detected events are unrelated to any observed source on the sky.  A current proposed solution suggests using {\em src.var.amplitude;src.var.pulse;stat.uncalib\/} for PHA, but this is not really appropriate since the connection to {\em src\/} (``observed source viewed on the sky'') is misleading and {\em src.var.amplitude\/} is defined as the ``amplitude of variation'' of the source which is a completely separate concept from an astronomical perspective.
+There is currently no UCD defined for a raw pulse height amplitude measure like PHA (or PI)\null.  PHA is such an important quantity to HEA datasets that we propose adding a new UCD {\em phys.pulseHeight\/} for these raw data values.  We note that the background signal (both of instrumental and cosmological origin) may be significant for many HE detectors and so the detected events are unrelated to any observed source on the sky.
 
-\subsection{Event Type}
+A proposed solution suggests using {\em src.var.amplitude;src.var.pulse;stat.uncalib\/} for PHA, but this is not really appropriate since the connection to {\em src\/} (``observed source viewed on the sky'') is misleading and {\em src.var.amplitude\/} is defined as the ``amplitude of variation'' of the source which is a completely separate concept from an astronomical perspective.
+
+\subsubsection{Event Type}
 
 For VHE (and GeV) data there is the notion of event type that can be mandatory for some data releases.  We propose to add a new UCD {\em instr.evt-type\/} that identifies these data values.
 % Needs input from relevant source
 
+\subsubsection{Evolution of UCD list}
 
-\section{MIME-type Enhancements}\label{sec:mimetypes}
+The proposed UCD entries are listed in Table~\ref{tab:he_ucds} with their descriptions.
 
-\subsection{x-fits-gadf}
+\begin{longtable}{p{0.1\linewidth}p{0.3\linewidth}p{0.6\linewidth}}
+\sptablerule
+\textbf{Label}  &  \textbf{UCD word} & \textbf{Description}\cr
+\sptablerule
+S & em.gamma.hard & Hard gamma ray (500 keV - 100 MeV)  \cr
+S & em.gamma.he   & High-Energy gamma ray (100 MeV - 10 GeV)  \cr
+S & em.gamma.vhe  & Very-High-Energy gamma ray (10 GeV - 100 TeV)  \cr
+S & em.gamma.uhe  & Ultra-High-Energy gamma ray (100 TeV - 10 PeV)  \cr
+S & obs.event-list& To be added?  \cr
+S & obs.spectrum  & To be added?  \cr
+S & phys.particle.electron& Related to electron/positron  \cr
+S & phys.particle.cosmicray      & Related to cosmic rays particles  \cr
+P & stats.error.minus & Negative statistical error  \cr
+P & stats.error.plus  & Positive statistical error  \cr
+P & stat.confidenceLevel.ul & Level of confidence for a upper/lower limits computation  \cr
+\sptablerule
+\caption{UCD words proposed extension}
+\label{tab:he_ucds}
+\end{longtable}
+
+
+\subsection{MIME-type Enhancements}\label{sec:mimetypes}
+
+\subsubsection{x-fits-gadf}
 % Needs input from relevant source
 
-\subsection{x-fits-vodf}
+\subsubsection{x-fits-vodf}
 % Needs input from relevant source
 
-\section{Datalink}\label{sec:datalink}
 
 
 
