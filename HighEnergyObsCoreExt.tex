@@ -362,7 +362,7 @@ The {\bf measurements} data product type is quite useful for many different type
 
 %-----
 
-\subsection{Summary table}
+\subsubsection{Summary table}
 
 The proposed vocabulary entries are listed in Table~\ref{tab:dp_vocabulary} with their label and parents.
 
@@ -390,7 +390,7 @@ The proposed vocabulary entries are listed in Table~\ref{tab:dp_vocabulary} with
 %\end{landscape}
 
 
-\subsubsection{Clarification of flux in some term definitions}
+\subsubsection{Clarification of ``flux'' in some term definitions}
 
 We propose to clarify the terms that use the word ``flux'' in the description of some terms, currently {\bf light-curve}, {\bf polarization-resolved-dataset}, {\bf polarized-spectrum}, and {\bf spectrum}, to determine whether they are applicable to HEA data.
 
@@ -399,6 +399,13 @@ The issue is that the term ``flux'' is not defined, and the standard astronomica
 is an energy flux (with SI units $\rm W\,m^{-2}$).  This interpretation is bolstered by the statements ``flux or magnitude'' applied to several of the descriptions since optical/IR magnitude and energy flux density are tightly related.  However, with this definition many HEA data products (that typically have units of counts) would not satisfy the descriptions of a light-curve or a spectrum, even though those terms are commonly used by the HEA community.
 
 Restating the descriptions to explicitly state ``Particle or energy flux or magnitude'' where appropriate would resolve this ambiguity.
+
+
+\subsection{DataLink vocabularies}\label{sec:UCDs}
+
+For some use cases, we proposed to show the different associated dataset via Datalinks. Each Datalink is described by several attributes, including the mandatory {\em semantics} attribute and a {\em content\_qualifier}.
+
+The terms defined for response functions may thus be used to fill the {\em content\_qualifier} attributes, with {\em semantics} = {\bf #calibration}.
 
 
 \subsection{UCD Enhancements}\label{sec:UCDs}
@@ -411,10 +418,24 @@ There is currently no UCD defined for a raw pulse height amplitude measure like 
 
 A proposed solution suggests using {\em src.var.amplitude;src.var.pulse;stat.uncalib\/} for PHA, but this is not really appropriate since the connection to {\em src\/} (``observed source viewed on the sky'') is misleading and {\em src.var.amplitude\/} is defined as the ``amplitude of variation'' of the source which is a completely separate concept from an astronomical perspective.
 
+\subsubsection{Electromagnetic spectrum description in UCD}
+
+The current definitions for the gamma-ray domains should be corrected and extended to include the HE, VHE and UHE gamma-ray domains.
+
 \subsubsection{Event Type}
 
 For VHE (and GeV) data there is the notion of event type that can be mandatory for some data releases.  We propose to add a new UCD {\em instr.evt-type\/} that identifies these data values.
 % Needs input from relevant source
+
+\subsubsection{Particles}
+
+Observations may concern other particules than the one currently described in the UCD list. The following particles could be added: electron/positron, cosmic rays.
+
+\subsubsection{Statistical UCDs}
+
+We suggest restricting {\em stat.max}/{\em stat.min} to mean the maximum/minimum statistic and adding new terms {\em stat.upperlimit}/{\em stat.lowerlimit} for upper/lower limits.
+
+For upper/lower limits, one expect a confidence level to be provided, which could be described by a UCD {\em stat.confidenceLevel}.
 
 \subsubsection{Evolution of UCD list}
 
@@ -428,13 +449,14 @@ S & em.gamma.hard & Hard gamma ray (500 keV - 100 MeV)  \cr
 S & em.gamma.he   & High-Energy gamma ray (100 MeV - 10 GeV)  \cr
 S & em.gamma.vhe  & Very-High-Energy gamma ray (10 GeV - 100 TeV)  \cr
 S & em.gamma.uhe  & Ultra-High-Energy gamma ray (100 TeV - 10 PeV)  \cr
-S & obs.event-list& To be added?  \cr
-S & obs.spectrum  & To be added?  \cr
-S & phys.particle.electron& Related to electron/positron  \cr
-S & phys.particle.cosmicray      & Related to cosmic rays particles  \cr
-P & stats.error.minus & Negative statistical error  \cr
-P & stats.error.plus  & Positive statistical error  \cr
-P & stat.confidenceLevel.ul & Level of confidence for a upper/lower limits computation  \cr
+S & phys.pulseHeight & Pulse height amplitude measure  \cr
+S & phys.particle.electron & Related to electron/positron  \cr
+S & phys.particle.cosmicray   & Related to cosmic rays particles  \cr
+P & stats.error.negative & Negative statistical error  \cr
+P & stats.error.positive  & Positive statistical error  \cr
+P & stat.upperlimit  & Upper limit \cr
+P & stat.lowerlimit  & Lower limit \cr
+P & stat.confidenceLevel & Level of confidence for a upper/lower limits computation  \cr
 \sptablerule
 \caption{UCD words proposed extension}
 \label{tab:he_ucds}
@@ -443,14 +465,16 @@ P & stat.confidenceLevel.ul & Level of confidence for a upper/lower limits compu
 
 \subsection{MIME-type Enhancements}\label{sec:mimetypes}
 
-\subsubsection{x-fits-gadf}
+Data files used in the HE domain should have appropriate MIME-type, so that they can be shown in ObsCore tables or elsewhere.
+
+Formats base on FITS could thus be declared as:
+
+\begin{itemize}
+\item {\bf x-fits-gadf}: for FITS files following the GADF specification.
 % Needs input from relevant source
-
-\subsubsection{x-fits-vodf}
+\item {\bf x-fits-vodf}: for FITS files following the VODF specification.
 % Needs input from relevant source
-
-
-
+\end{itemize}
 
 \pagebreak
 \printglossaries
