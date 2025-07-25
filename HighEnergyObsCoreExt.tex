@@ -23,6 +23,7 @@
 %\usepackage{minted}
 \setlength {\marginparwidth }{2cm}
 \usepackage{todonotes}
+\usepackage{array}
 
 \usepackage[toc]{glossaries}
 \newacronym{IVOA}{IVOA}{International Virtual Observatory Alliance}
@@ -325,9 +326,42 @@ For VHE (and GeV) data there is the notion of event type that can be mandatory f
 \subsection{x-fits-vodf}
 % Needs input from relevant source
 
-\section{Datalink}\label{sec:datalink}
+\section{Proposal of the {\it ivoa.obscore\_he} attributes}\label{sec:ibscoreext}
 
-
+\begin{center}
+\begin{tabular}{ | m{3cm} | m{3em} | m{3em} | m{3em} | m{6cm} | m{3em} |}
+\hline
+{\centering \bf Column Name}     &{\centering \bf UType} &{\centering \bf Unit} &{\centering \bf Type} &{\centering \bf Description} &{\centering \bf MAN}\\
+\hline
+ ev\_xel & TBD &  unitless & int & Number of events in an event\_list & NO \\
+\hline
+ s\_ref\_energy & TBD & eV & float & Energy at which the ObsCore spatial characterisation attributes s\_fov , s\_region, s\_resolution are defined & NO \\
+\hline
+ em\_ref\_energy  & TBD & eV & float & Energy at which the ObsCore spatial characterisation attributes em\_res\_power, em\_resolution are defined & NO \\
+\hline
+ s\_ref\_oaa & TBD & deg & float & Off-axis angle (i.e., the angular separation of the target or source from the telescope optical axis) at which the ObsCore spatial characterisation attributes s\_fov , s\_region, s\_resolution are defined & NO \\
+\hline
+ em\_ref\_oaa & TBD & deg & float & Off-axis angle (i.e., the angular separation of the target or source from the telescope optical axis) at which the ObsCore spectral characterisation attributes em\_res\_power, em\_resolution are defined & NO \\
+\hline
+  t\_intervals & TBD & unitless & TMOC &List of observation intervals or stable/good time intervals describing the exact observation time coverage  & NO \\
+\hline
+  energy\_min & TBD & float & eV & Energy associated to the Obscore attribute em\_max, describing the minimal energy of the dataset & NO \\
+\hline
+  energy\_max & TBD & float & eV & Energy associated to the Obscore attribute em\_min, describing the maximal energy of the dataset & NO \\
+\hline
+  obs\_mode & TBD & unitless & string &  Observation mode of the observation (e.g. TBU) & NO \\
+\hline
+  scan\_mode & TBD & unitless & string & (e.g target pointing, grid scan  - TBC) & NO \\
+\hline
+  tracking\_mode & TBD & unitless & string & Tracking mode of an observation (e.g., sidereal rate, moving target [solar system] tracking, drift scans)  & NO \\
+\hline
+  analysis\_mode & TBD & unitless & string & Data reduction/analysis mode& NO \\
+\hline
+  event\_type & TBD & unitless & string & Data quality flag of the events (e.g. ``good psf'', ``good rejection'', ``Nhit (100,200)'' & NO \\
+\hline
+\end{tabular}
+\end{center}
+TBD: To Be Defined by the WG Data Model.
 
 \pagebreak
 \printglossaries
