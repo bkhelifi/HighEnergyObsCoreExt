@@ -130,7 +130,7 @@ The ObsCore v1.1 recommendation \citep{2017ivoa.spec.0509L} only defines an {\bf
 {\bf event}: an event-counting ({\em e.g.\/}, X-ray or other high energy) dataset of some sort. Typically this is instrumental data, {\em i.e.\/}, ``event data''.  An event dataset is often a complex object containing multiple files or other substructures. An event dataset may contain data with spatial, spectral, and time information for each measured event, although the spectral resolution (energy) is sometimes limited. Event data may be used to produce higher level data products such as images or spectra.
 \end{quote}
 
-An IVOA vocabulary is being developped for Product Types\footnote{https://www.ivoa.net/rdf/product-type} were the term {\bf event-list} is proposed as a replacement:
+An IVOA vocabulary is being developed for Product Types\footnote{https://www.ivoa.net/rdf/product-type} were the term {\bf event-list} is proposed as a replacement:
 \begin{quote}
 {\bf event-list}: a collection of observed events, such as incoming high-energy particles. A row in an event list is typically characterised by a spatial position, a time and an energy.
 \end{quote}
@@ -158,11 +158,12 @@ For {\bf event-list}s, we propose that the calibration status of the spatial/spe
 
 \subsection{{\em access\_url}}
 
-Given the complexity and number of HE data products, we propose to point the access\_url either to a file directly (e.g. the event-list or an event-bundle), or to a DataLink service that will provide links to the data and to associated data (e.g. response functions).
+Given the complexity and number of HE data products, the {\em access\_url} may point either directly to a file (e.g. to the event-list or an event-bundle), or to a DataLink service that will provide links to the data and to associated data (e.g. response functions).
 
-In case Datalinks are provided, it should be indicated that the URL points to a Datalink service (via the access\_format probably).
+If DataLink is provided, it should be indicated that the URL points to a Datalink service via the {\em access\_format} = application/x-votable+xml;content=datalink.
 
-If the access\_url points to a bundle, an issue is that the detailed content of the bundle is not directly exposed, we thus see an advantage in using a DataLink service.
+If the {\em access\_url} points to a bundle, the detailed content of the bundle is not exposed; therefore using a DataLink service has advantages.
+%Otherwise, the description of the content of the bundle could be indicated in dedicated attribute.
 
 
 \subsection{{\em access\_format}}
@@ -181,7 +182,7 @@ We propose that {\em s\_calib\_status} encode the calibration status of an {\bf 
 
 Under the (reasonable) assumption that an end-user searching for {\bf event-bundle} datasets is typically querying based on the properties of the primary {\bf event-list} we suggest that those values also be used for the {\bf event-bundle}.  However, the data provider should ultimately decide which value best describes their {\bf event-bundle} dataset.
 
-For dataset types that do not not encode sky coordinates, we suggest setting this value to NULL\null.
+For dataset types that do not encode sky coordinates, we suggest setting this value to NULL\null.
 
 \subsection{{\em t\_calib\_status}}
 
