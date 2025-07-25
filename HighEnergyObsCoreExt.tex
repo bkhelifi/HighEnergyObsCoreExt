@@ -274,7 +274,7 @@ Some HEA instruments allow data to be reduced/analyzed in multiple ways and thes
 \subsection{Evolution of the Data Product Type vocabulary}
 \label{sec:voc_product_type}
 
-The IVOA Data Product Type Vocabulary (\url{http://www.ivoa.net/rdf/product-type}) provides terms, labels, and descriptions for many types of astronomical data products. However, there are some additions and changes that are appropriate to better support HEA datasets.
+The IVOA Data Product Type Vocabulary (\url{http://www.ivoa.net/rdf/product-type}) provides terms, labels, and descriptions for many types of astronomical data products. However, there are some additions and changes that are appropriate to better support \gls{HE} datasets.
 
 %----- commented as redundant with moved text from section 3.1
 %We propose to add vocabulary entries for the data product types outlined in \S~\ref{sec:dataproduct_type} ({\em i.e.\/}, {\bf event-bundle}, {\bf draws}, {\bf pdf}, {\bf region}, {\bf response-function}) and also propose to slightly modify the existing definition of {\bf event-list} so that it aligns more accurately with the definition in \S~\ref{sec:dataproduct_type}.  Additionally, we propose to add several more specific entries to the data product type vocabulary that specialize these types (especially {\bf response-function}).  Any future revision of the ObsCore Recommendation to use the IVOA Data Product Type Vocabulary in preference to the enumerated values for {\em dataproduct\_type\/} would profit from these additional vocabulary entries.
@@ -286,15 +286,15 @@ The IVOA Data Product Type Vocabulary (\url{http://www.ivoa.net/rdf/product-type
 We first propose to better define an {\bf event-list}:
 
 \begin{quote}
-{\bf event-list}: A dataset containing a collection of observed events, such as incoming HE particles, where an event is typically characterized by a spatial position, a time, and a spectral value ({\em e.g.\/}, an energy, a channel, a pulse height)
+{\bf event-list}: A dataset containing a collection of observed events, such as incoming \gls{HE} particles, where an event is typically characterized by a spatial position, a time, and a spectral value ({\em e.g.\/}, an energy, a channel, a pulse height)
 \end{quote}
 
 \subsubsection{Response functions}
 
-We then propose to add the following product types to define the different response functions (e.g. \glspl{IRF}) generally used in HE:
+We then propose to add the following product types to define the different response functions (e.g. \glspl{IRF}) generally used in \gls{HE}:
 
 \begin{quote}
-{\bf response-function}: A dataset that maps a physical quantity to an observable. Narrower terms can be used to specify the type of response function.
+{\bf response-function}: A dataset that maps a physical quantity to an observable. Narrower terms can be used to indictate more precisely the response function.
 %This term is mainly intended for retrieval. To annotate datasets, use a narrower term.
 \end{quote}
 
@@ -329,7 +329,7 @@ We then propose to add the following product types to define the different respo
 
 \subsubsection{Event bundle}
 
-Some use cases imply the access to an {\bf event-bundle}, a bundle of datasets that includes the {\bf event-list} and associated  data:
+Some use cases  require access to an {\bf event-bundle}, a bundle of datasets that includes the {\bf event-list} and associated  data:
 
 \begin{quote}
 {\bf event-bundle}: An event-bundle dataset is a complex object containing an {\bf event-list} and multiple files or other substructures that are products necessary to analyze the {\bf event-list}. Data in an event-bundle may thus be used to produce calibrated, higher level data products such as images or spectra.
@@ -341,7 +341,7 @@ It may also contain provenance information, and preview images or plots.
 
 \subsubsection{Advanced data products}
 
-In addition to product types that focus on event data, we note that existing ObsCore definitions do not adequately span the breadth of advanced data products (with {\em calib\_level\/}${}\ge 3$ that may be generated from astronomical observations. The computational complexity of analyzing HE data robustly in the extreme Poisson regime ({\em e.g.\/}, Bayesian X-ray aperture photometry applied simultaneously to multiple overlapping detections and observations) means that data providers may choose to provide such analysis products directly to the end user.
+In addition to product types that focus on event data, we note that existing ObsCore definitions do not adequately span the breadth of advanced data products (with {\em calib\_level\/}${}\ge 3$ that may be generated from astronomical observations. The computational complexity of analyzing \gls{HE} data robustly in the extreme Poisson regime ({\em e.g.\/}, Bayesian X-ray aperture photometry applied simultaneously to multiple overlapping detections and observations) means that data providers may choose to provide such analysis products directly to the end user.
 
 % should go in use cases maybe?
 For example, the {\em Chandra\/} Source Catalog includes 38 types of advanced data products  (for a total of $\sim\!90$ million files) and $\sim\!50\%$ of these data product types are not well represented by a {\em dataproduct\_type} value that allows for meaningful data discovery.  Users will certainly want to discover these data products independently from the associated observation data (and many of these data products combine data from multiple observations).  We therefore propose the following additional {\em dataproduct\_type}s for these advanced data products, and note that these {\em dataproduct\_type}s will certainly be useful independent of waveband ({\em i.e.\/}, they can be equally applicable to UV/optical, IR, and radio datasets:
@@ -392,18 +392,18 @@ The proposed vocabulary entries are listed in Table~\ref{tab:dp_vocabulary} with
 
 \subsubsection{Clarification of ``flux'' in some term definitions}
 
-We propose to clarify the terms that use the word ``flux'' in the description of some terms, currently {\bf light-curve}, {\bf polarization-resolved-dataset}, {\bf polarized-spectrum}, and {\bf spectrum}, to determine whether they are applicable to HEA data.
+We propose to clarify the terms that use the word ``flux'' in the description of some terms, currently {\bf light-curve}, {\bf polarization-resolved-dataset}, {\bf polarized-spectrum}, and {\bf spectrum}, to determine whether they are applicable to \gls{HE} data.
 
 The issue is that the term ``flux'' is not defined, and the standard astronomical definition of ``flux''
 %for at least the last century
-is an energy flux (with SI units $\rm W\,m^{-2}$).  This interpretation is bolstered by the statements ``flux or magnitude'' applied to several of the descriptions since optical/IR magnitude and energy flux density are tightly related.  However, with this definition many HEA data products (that typically have units of counts) would not satisfy the descriptions of a light-curve or a spectrum, even though those terms are commonly used by the HEA community.
+is an energy flux (with SI units $\rm W\,m^{-2}$).  This interpretation is bolstered by the statements ``flux or magnitude'' applied to several of the descriptions since optical/IR magnitude and energy flux density are tightly related.  However, with this definition many \gls{HE} data products (that typically have units of counts) would not satisfy the descriptions of a light-curve or a spectrum, even though those terms are commonly used by the \gls{HE} community.
 
 Restating the descriptions to explicitly state ``Particle or energy flux or magnitude'' where appropriate would resolve this ambiguity.
 
 
 \subsection{DataLink vocabularies}\label{sec:UCDs}
 
-For some use cases, we proposed to show the different associated dataset via Datalinks. Each Datalink is described by several attributes, including the mandatory {\em semantics} attribute and a {\em content\_qualifier}.
+For some use cases, we proposed to show the different associated datasets via Datalink. Each Datalink is described by several attributes, including the mandatory {\em semantics} attribute and a {\em content\_qualifier}.
 
 The terms defined for response functions may thus be used to fill the {\em content\_qualifier} attributes, with {\em semantics} = {\bf #calibration}.
 
@@ -414,28 +414,28 @@ The terms defined for response functions may thus be used to fill the {\em conte
 
 For many X-ray and gamma-ray instruments the signal observed in a given detector spectral channel is the result of event counting and would typically be recorded as a Pulse Height Amplitude (PHA), or perhaps a Pulse Invariant (PI) value that is calculated from PHA by applying an appropriate gain calibration.  The PHA (or PI) can be related to the incident particle energy by applying the appropriate {\bf response-function}, and higher data calibration level products may replace or augment these values with quantities such as energy, or perhaps particle or energy flux.
 
-There is currently no UCD defined for a raw pulse height amplitude measure like PHA (or PI)\null.  PHA is such an important quantity to HEA datasets that we propose adding a new UCD {\em phys.pulseHeight\/} for these raw data values.  We note that the background signal (both of instrumental and cosmological origin) may be significant for many HE detectors and so the detected events are unrelated to any observed source on the sky.
+There is currently no UCD defined for a raw pulse height amplitude measure like PHA (or PI)\null.  PHA is such an important quantity to \gls{HE} datasets that we propose adding a new UCD {\em phys.pulseHeight\/} for these raw data values.  We note that the background signal (both of instrumental and cosmological origin) may be significant for many \gls{HE} detectors and so the detected events are unrelated to any observed source on the sky.
 
 A proposed solution suggests using {\em src.var.amplitude;src.var.pulse;stat.uncalib\/} for PHA, but this is not really appropriate since the connection to {\em src\/} (``observed source viewed on the sky'') is misleading and {\em src.var.amplitude\/} is defined as the ``amplitude of variation'' of the source which is a completely separate concept from an astronomical perspective.
 
 \subsubsection{Electromagnetic spectrum description in UCD}
 
-The current definitions for the gamma-ray domains should be corrected and extended to include the HE, VHE and UHE gamma-ray domains.
+The current definitions for the gamma-ray domains should be corrected and extended to include the \gls{HE}, \gls{VHE} and \gls{UHE} gamma-ray domains.
 
 \subsubsection{Event Type}
 
-For VHE (and GeV) data there is the notion of event type that can be mandatory for some data releases.  We propose to add a new UCD {\em instr.evt-type\/} that identifies these data values.
+For \gls{VHE} (and GeV) data there is the notion of event type that can be mandatory for some data releases.  We propose to add a new UCD {\em instr.evt-type\/} that identifies these data values.
 % Needs input from relevant source
 
 \subsubsection{Particles}
 
-Observations may concern other particules than the one currently described in the UCD list. The following particles could be added: electron/positron, cosmic rays.
+Observations may concern other particles than the one currently described in the UCD list. The following particles could be added: electron/positron, cosmic rays.
 
 \subsubsection{Statistical UCDs}
 
 We suggest restricting {\em stat.max}/{\em stat.min} to mean the maximum/minimum statistic and adding new terms {\em stat.upperlimit}/{\em stat.lowerlimit} for upper/lower limits.
 
-For upper/lower limits, one expect a confidence level to be provided, which could be described by a UCD {\em stat.confidenceLevel}.
+For upper/lower limits, one expects a confidence level to be provided, which could be described by a UCD {\em stat.confidenceLevel}.
 
 \subsubsection{Evolution of UCD list}
 
@@ -456,18 +456,18 @@ P & stats.error.negative & Negative statistical error  \cr
 P & stats.error.positive  & Positive statistical error  \cr
 P & stat.upperlimit  & Upper limit \cr
 P & stat.lowerlimit  & Lower limit \cr
-P & stat.confidenceLevel & Level of confidence for a upper/lower limits computation  \cr
+P & stat.confidenceLevel & Level of confidence for a upper/lower limit computation  \cr
 \sptablerule
 \caption{UCD words proposed extension}
 \label{tab:he_ucds}
 \end{longtable}
 
 
-\subsection{MIME-type Enhancements}\label{sec:mimetypes}
+\subsection{MIME-types Enhancements}\label{sec:mimetypes}
 
-Data files used in the HE domain should have appropriate MIME-type, so that they can be shown in ObsCore tables or elsewhere.
+Data files used in the \gls{HE} domain should have appropriate MIME-types, so that they can be shown in ObsCore tables or elsewhere.
 
-Formats base on FITS could thus be declared as:
+Formats based on FITS could thus be declared as:
 
 \begin{itemize}
 \item {\bf x-fits-gadf}: for FITS files following the GADF specification.
