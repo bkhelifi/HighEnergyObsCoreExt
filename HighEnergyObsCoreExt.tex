@@ -34,6 +34,7 @@
 \newacronym{HEA}{HEA}{High Energy Astrophysics}
 \newacronym{HEIG}{HEIG}{High Energy Interest Group}
 \newacronym{VHE}{VHE}{Very High Energy}
+\newacronym{UHE}{UHE}{Ultra High Energy}
 \newacronym{HESS}{H.E.S.S.}{High Energy Stereoscopic System}
 \newacronym{CTAO}{CTAO}{Cherenkov Telescope Array Observatory}
 \newacronym{IACT}{IACT}{imaging atmospheric Cherenkov telescopes}
@@ -302,9 +303,7 @@ We propose to add an optional attribute {\bf event\_type} that specifies the dat
 \subsection{Evolution of the Data Product Type vocabulary}
 \label{sec:voc_product_type}
 
-While the IVOA Data Product Type Vocabulary (\url{http://www.ivoa.net/rdf/product-type}) provides terms, labels, and descriptions for many types of astronomical data products, there are some additions and changes that are appropriate to better support HEA datasets.
-
-The IVOA Data Product Type Vocabulary (\url{http://www.ivoa.net/rdf/product-type}) provides terms, labels, and descriptions for many types of astronomical data products. However, there are some additions and changes that are appropriate to better support \gls{HE} datasets.
+The \gls{IVOA} Data Product Type Vocabulary (\url{http://www.ivoa.net/rdf/product-type}) provides terms, labels, and descriptions for many types of astronomical data products. However, there are some additions and changes that are appropriate to better support \gls{HEA} datasets.
 
 %----- commented as redundant with moved text from section 3.1
 %We propose to add vocabulary entries for the data product types outlined in \S~\ref{sec:dataproduct_type} ({\em i.e.\/}, {\bf event-bundle}, {\bf draws}, {\bf pdf}, {\bf region}, {\bf response-function}) and also propose to slightly modify the existing definition of {\bf event-list} so that it aligns more accurately with the definition in \S~\ref{sec:dataproduct_type}.  Additionally, we propose to add several more specific entries to the data product type vocabulary that specialize these types (especially {\bf response-function}).  Any future revision of the ObsCore Recommendation to use the IVOA Data Product Type Vocabulary in preference to the enumerated values for {\em dataproduct\_type\/} would profit from these additional vocabulary entries.
@@ -334,27 +333,27 @@ We then propose to add the following product types to define the different respo
 % \end{quote}
 
 \begin{quote}
-{\bf aeff}: A dataset that records the ``effective area'' of a telescope and/or instrument.  The effective area is the geometric area of the telescope and/or instrument reduced by efficiency factors such as reflectivity and vignetting, among other effects.\footnote{\label{fn:dfgamma}Data Formats for Gamma-ray Astronomy, v0.3, 2018 (\url{https://gamma-astro-data-formats.readthedocs.io/en/latest/irfs/irf_components/index.html}).}
+{\bf aeff}: A dataset that records the ``effective area'' of a telescope and/or instrument.  The effective area is the geometric area of the telescope and/or instrument reduced by efficiency factors such as reflectivity and vignetting, among other effects.\footnote{Data Formats for Gamma-ray Astronomy \citep{deil_2022_7304668} (\url{https://gamma-astro-data-formats.readthedocs.io/en/latest/irfs/irf_components/index.html}).}
 \end{quote}
 
 \begin{quote}
-{\bf edisp}: A dataset that records the probability density function for the energy migration as a function of true energy and spatial position.\footref{fn:dfgamma}
+{\bf edisp}: A dataset that records the probability density function for the energy migration as a function of true energy and spatial position \citep{deil_2022_7304668}.
 \end{quote}
 
 \begin{quote}
-{\bf bkgrate}: A dataset that records the rate of residual atmospheric cosmic-ray events.\footref{fn:dfgamma}
+{\bf bkgrate}: A dataset that records the rate of residual atmospheric cosmic-ray events \citep{deil_2022_7304668}.
 \end{quote}
 
 \begin{quote}
-{\bf psf}: A dataset that records the probability density function of spatial/angular spreading of incident photons from a point source caused by the instrument (detector and/or mirror and/or analysis).\footref{fn:dfgamma}$^{,}$\footnote{I.M. George and R. Yusaf. The OGIP Format For 2-D (image) Point Spread Function Datasets. Technical Report OGIP/92-027, NASA/GSFC, Nov 2011. (\url{https://heasarc.gsfc.nasa.gov/docs/heasarc/caldb/docs/memos/cal_gen_92_027/cal_gen_92_027.pdf}).}
+{\bf psf}: A dataset that records the probability density function of spatial/angular spreading of incident photons from a point source caused by the instrument (detector and/or mirror and/or analysis) \citep{deil_2022_7304668, ogip_psf_2011}
 \end{quote}
 
 \begin{quote}
-{\bf arf}: A dataset that records the combined telescope/instrument effective area and detector quantum efficiency as a function of energy.\footnote{\label{fn:ogip92002}I.M. George, K.A. Arnaud and A.F. Tennant. The Calibration Requirements for Spectral Analysis. Technical Report OGIP/92-002, NASA/GSFC, Dec 1998. (\url{https://heasarc.gsfc.nasa.gov/docs/heasarc/caldb/docs/memos/cal_gen_92_002/cal_gen_92_002.pdf}).}
+{\bf arf}: A dataset that records the combined telescope/instrument effective area and detector quantum efficiency as a function of energy \citep{ogip_spectrum_1998}
 \end{quote}
 
 \begin{quote}
-{\bf rmf}: A dataset that records the probability density function mapping from energy space into detector pulse height (or position) space.\footref{fn:ogip92002}.
+{\bf rmf}: A dataset that records the probability density function mapping from energy space into detector pulse height (or position) space \citep{ogip_spectrum_1998}.
 \end{quote}
 
 \subsubsection{Event bundle}
@@ -397,22 +396,22 @@ The {\bf measurements} data product type is quite useful for many different type
 The proposed vocabulary entries are listed in Table~\ref{tab:dp_vocabulary} with their label and parents.
 
 %\begin{landscape}
-\begin{longtable}{p{0.3\linewidth}p{0.3\linewidth}p{0.3\linewidth}}
+\begin{longtable}{p{0.2\linewidth}p{0.2\linewidth}p{0.4\linewidth}p{0.2\linewidth}}
 \sptablerule
-\textbf{Term}  &  \textbf{Label} & \textbf{Parent}\cr
+\textbf{Term}  &  \textbf{Label} & \textbf{Description} &\textbf{Parent}\cr
 \sptablerule
-{\bf aeff} & Effective Area & A dataset that records the ``effective area'' of a telescope and/or instrument.  The effective area is the geometric area of the telescope and/or instrument reduced by efficiency factors such as reflectivity and vignetting, among other effects\footnote{\label{fn:dfgamma}Data Formats for Gamma-ray Astronomy, v0.3, 2018 (\url{https://gamma-astro-data-formats.readthedocs.io/en/latest/irfs/irf_components/index.html}).} & \#response-function \cr
-{\bf arf} &\raggedright Ancillary Response File & A dataset that records the combined telescope/instrument effective area and detector quantum efficiency as a function of energy\footnote{\label{fn:ogip92002}I.M. George, K.A. Arnaud and A.F. Tennant. The Calibration Requirements for Spectral Analysis. Technical Report OGIP/92-002, NASA/GSFC, Dec 1998. (\url{https://heasarc.gsfc.nasa.gov/docs/heasarc/caldb/docs/memos/cal_gen_92_002/cal_gen_92_002.pdf}).} & \#response-function \cr
-{\bf bkgrate} & Background Rate & A dataset that records the rate of residual atmospheric cosmic-ray events.\footref{fn:dfgamma} & \#response-function \cr
+{\bf aeff} & Effective Area & A dataset that records the ``effective area'' of a telescope and/or instrument.  The effective area is the geometric area of the telescope and/or instrument reduced by efficiency factors such as reflectivity and vignetting, among other effects \citep{deil_2022_7304668} & \#response-function \cr
+{\bf arf} &\raggedright Ancillary Response File & A dataset that records the combined telescope/instrument effective area and detector quantum efficiency as a function of energy \citep{ogip_spectrum_1998} & \#response-function \cr
+{\bf bkgrate} & Background Rate & A dataset that records the rate of residual atmospheric cosmic-ray events.\citep{deil_2022_7304668} & \#response-function \cr
 {\bf draws} & Draws & A dataset that records statistical draws computed from a probability distribution, for example Markov chain Monte Carlo (MCMC) draws used when computing the Bayesian marginal probability density function for a random variable.& \cr
-{\bf edisp} & Energy Dispersion & A dataset that records the probability density function for the energy migration as a function of true energy and spatial position.\footref{fn:dfgamma} & \#response-function, \#pdf \cr
+{\bf edisp} & Energy Dispersion & A dataset that records the probability density function for the energy migration as a function of true energy and spatial position.\citep{deil_2022_7304668} & \#response-function, \#pdf \cr
 {\bf event-bundle} & Event Bundle & An event-bundle dataset is a complex object containing an {\bf event-list} and multiple files or other substructures that are products necessary to analyze the {\bf event-list}. & \cr
-{\bf event-list} & Event list & A dataset containing a collection of observed events, such as incoming \gls{HE} particles, where an event is typically characterized by a spatial position, a time, and a spectral value ({\em e.g.\/}, an energy, a channel, a pulse height) & \#temporally-resolved-dataset \cr
+{\bf event-list} & Event list & A dataset containing a collection of observed events, such as incoming \gls{HEA} particles, where an event is typically characterized by a spatial position, a time, and a spectral value ({\em e.g.\/}, an energy, a channel, a pulse height) & \#temporally-resolved-dataset \cr
 {\bf pdf} &\raggedright Probability Density Function & A dataset that records the probability density function of a quantity, for example the Bayesian marginal probability density function for a random variable. & \#measurements \cr
-{\bf psf} &\raggedright Point Spread Function & A dataset that records the probability density function of spatial/angular spreading of incident photons from a point source caused by the instrument (detector and/or mirror and/or analysis).\footref{fn:dfgamma}$^{,}$\footnote{I.M. George and R. Yusaf. The OGIP Format For 2-D (image) Point Spread Function Datasets. Technical Report OGIP/92-027, NASA/GSFC, Nov 2011. (\url{https://heasarc.gsfc.nasa.gov/docs/heasarc/caldb/docs/memos/cal_gen_92_027/cal_gen_92_027.pdf}).} & \#response-function, \#pdf  \cr
+{\bf psf} &\raggedright Point Spread Function & A dataset that records the probability density function of spatial/angular spreading of incident photons from a point source caused by the instrument (detector and/or mirror and/or analysis).\citep{deil_2022_7304668, ogip_psf_2011} & \#response-function, \#pdf  \cr
 {\bf region} & Region & A dataset that encodes (one or more) regions of parameter space, for example a spatial region or a region of phase space covered by a dataset. The set of dimensions represented by the region can be arbitrary. & \#measurements \cr
 {\bf response-function} & Response Function & A dataset that maps a physical quantity to an observable.  This term is mainly intended for retrieval. To annotate datasets, use a narrower term. & \cr
-{\bf rmf} &\raggedright Redistribution Matrix File & A dataset that records the probability density function mapping from energy space into detector pulse height (or position) space.\footref{fn:ogip92002} & \#response-function, \#pdf \cr
+{\bf rmf} &\raggedright Redistribution Matrix File & A dataset that records the probability density function mapping from energy space into detector pulse height (or position) space \citep{ogip_spectrum_1998} & \#response-function, \#pdf \cr
 \sptablerule
 \caption{IVOA Data Product Type Vocabulary extension}
 \label{tab:dp_vocabulary}
@@ -431,11 +430,11 @@ is an energy flux (with SI units $\rm W\,m^{-2}$).  This interpretation is bolst
 Restating the descriptions to explicitly state ``Particle or energy flux or magnitude'' where appropriate would resolve this ambiguity.
 
 
-\subsection{DataLink vocabularies}\label{sec:UCDs}
+\subsection{DataLink vocabularies}\label{sec:DLs}
 
 For some use cases, we proposed to show the different associated datasets via Datalink. Each Datalink is described by several attributes, including the mandatory {\em semantics} attribute and a {\em content\_qualifier}.
 
-The terms defined for response functions may thus be used to fill the {\em content\_qualifier} attributes, with {\em semantics} = {\bf #calibration}.
+The terms defined for response functions may thus be used to fill the {\em content\_qualifier} attributes, with {\em semantics} = {\bf \#calibration}.
 
 
 \subsection{UCD Enhancements}\label{sec:UCDs}
