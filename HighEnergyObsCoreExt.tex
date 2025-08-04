@@ -321,6 +321,7 @@ We first propose to better define an {\bf event-list}:
 \end{quote}
 
 \subsubsection{Response functions}
+\label{sec:responsefct}
 
 We then propose to add the following product types to define the different response functions (e.g. \glspl{IRF}) generally used in \gls{HEA}:
 
@@ -404,21 +405,21 @@ is an energy flux (with SI units $\rm W\,m^{-2}$).  This interpretation is bolst
 \begin{itemize}
   \item particle flux, units=[counts/m2/s],
   \item particle flux per steradian, units=[counts/m2/s/str],
-  \item particle flux density (or differential particle flux,) units=[counts/m2/s/TeV],
+  \item particle flux density (or differential particle flux) units=[counts/m2/s\\/TeV],
   \item energy flux, units=[W/m2],
   \item energy flux per steradian ({\em i.e.\/} radiance), units=[W/m2/str],
   \item energy flux density (or differential energy flux), units=[W/m2/str/TeV],
 \end{itemize}
 And these are not all covered by UCD vocabulary. This would be particularly useful for cases where we actually should have the same UCDs as {\em e.g.\/} a Radio measurement, but where we use very different units. For example: Janskeys and erg/cm2/s/TeV are both types of "spectral flux density", but the unit analysis doesn't agree due to frequency-energy equivalency.
 
-Restating the descriptions to explicitly state ``Particle or energy flux or magnitude'' where appropriate would resolve this ambiguity associated to unit confusions.
+Restating the descriptions to explicitly state ``Particle or energy flux or magnitude'' where appropriate would resolve this ambiguity associated to unit confusions. These different type of fluxes will be proposed to be added in the UCD list.
 
 
 \subsection{DataLink vocabularies}\label{sec:DLs}
 
 For some use cases, we proposed to show the different associated datasets via Datalink. Each Datalink is described by several attributes, including the mandatory {\em semantics} attribute and a {\em content\_qualifier}.
 
-The terms defined for response functions may thus be used to fill the {\em content\_qualifier} attributes, with {\em semantics} = {\bf \#calibration}.
+The terms defined for response functions (see \S\ref{sec:responsefct}) may thus be used to fill the {\em content\_qualifier} attributes, with {\em semantics} = {\bf \#calibration}.
 
 
 \subsection{UCD Enhancements}\label{sec:UCDs}
@@ -429,7 +430,7 @@ For many X-ray and gamma-ray instruments the signal observed in a given detector
 
 There is currently no UCD defined for a raw pulse height amplitude measure like PHA (or PI). PHA is such an important quantity to \gls{HEA} datasets that we propose adding a new UCD {\em phys.pulseHeight\/} for these raw data values.  We note that the background signal (both of instrumental and cosmological origin) may be significant for many \gls{HE} detectors and so the detected events are unrelated to any observed source on the sky.  A current proposed solution suggests using {\em src.var.amplitude;src.var.pulse;stat.uncalib\/} for PHA, but this is not really appropriate since the connection to {\em src\/} (``observed source viewed on the sky'') is misleading and {\em src.var.amplitude\/} is defined as the ``amplitude of variation'' of the source which is a completely separate concept from an astronomical perspective.
 
-A proposed solution suggests using {\em src.var.amplitude;src.var.pulse;stat.uncalib\/} for PHA, but this is not really appropriate since the connection to {\em src\/} (``observed source viewed on the sky'') is misleading and {\em src.var.amplitude\/} is defined as the ``amplitude of variation'' of the source which is a completely separate concept from an astronomical perspective.
+A proposed solution suggests using {\em src.var.amplitude;src.var.pulse;stat.uncalib} for PHA, but this is not really appropriate since the connection to {\em src\/} (``observed source viewed on the sky'') is misleading and {\em src.var.amplitude\/} is defined as the ``amplitude of variation'' of the source which is a completely separate concept from an astronomical perspective.
 
 \subsubsection{Electromagnetic spectrum description in UCD}
 
@@ -442,13 +443,13 @@ For \gls{VHE} (and GeV) data there is the notion of event type that can be manda
 
 \subsubsection{Particles}
 
-Observations may concern other particles than the one currently described in the UCD list. The following particles could be added: electron/positron, cosmic rays.
+Observations may concern other particles than the one currently described in the UCD list. The following particles could be added: electron/positron, cosmic rays, as well as their energy
 
 \subsubsection{Statistical UCDs}
 
-We suggest restricting {\em stat.max}/{\em stat.min} to mean the maximum/minimum statistic and adding new terms {\em stat.upperlimit}/{\em stat.lowerlimit} for upper/lower limits.
+We suggest restricting {\em stat.max}/{\em stat.min} to mean the maximum/minimum statistic and adding new terms {\em stat.upperlimit}/{\em stat.lowerlimit} for upper/lower limits. For upper/lower limits, one expects a confidence level to be provided, which could be described by a UCD {\em stat.confidenceLevel}.
 
-For upper/lower limits, one expects a confidence level to be provided, which could be described by a UCD {\em stat.confidenceLevel}.
+One proposes also to add a likelihood profile as UCD
 
 \subsubsection{Evolution of UCD list}
 
@@ -463,6 +464,7 @@ S & em.gamma.he   & High-Energy gamma ray (100 MeV - 10 GeV)  \cr
 S & em.gamma.vhe  & Very-High-Energy gamma ray (10 GeV - 100 TeV)  \cr
 S & em.gamma.uhe  & Ultra-High-Energy gamma ray (100 TeV - 10 PeV)  \cr
 S & phys.pulseHeight & Pulse height amplitude measure  \cr
+S & phys.particle.energy &Energy of a particle \cr
 S & phys.particle.electron & Related to electron/positron  \cr
 S & phys.particle.cosmicray   & Related to cosmic rays particles  \cr
 P & stats.error.negative & Negative statistical error  \cr
@@ -470,11 +472,30 @@ P & stats.error.positive  & Positive statistical error  \cr
 P & stat.upperlimit  & Upper limit \cr
 P & stat.lowerlimit  & Lower limit \cr
 P & stat.confidenceLevel & Level of confidence for a upper/lower limit computation  \cr
+P & stat.likelihood.profile & Profile of likelihood values \cr
+E & phot.strcount & Particle flux per steradian (dimension: [L$^{-2}$ T$^{-1}$ sr$^{-1}$])  \cr
+E & phot.diffcount & Particle flux density (or differential particle flux) (dimension: [L$^{-2}$ T$^{-1}$ E$^{-1}$])  \cr
+E & phot.strflux & Energy flux per steradian or radiance (dimension: [W L$^{-2}$ sr$^{-1}$])  \cr
+E & phot.enflux & Energy flux density (dimension: [W L$^{-2}$ sr$^{-1}$] E$^{-1}$)  \cr
 \sptablerule
 \caption{UCD words proposed extension}
 \label{tab:he_ucds}
 \end{longtable}
 
+And here is the proposals of update of the existing flux terms:
+\begin{longtable}{p{0.1\linewidth}p{0.3\linewidth}p{0.6\linewidth}}
+\sptablerule
+\textbf{Label}  &  \textbf{UCD word} & \textbf{Description}\cr
+\sptablerule
+E & phot.count & Flux expressed in counts (dimension: [L$^{-2}$ T$^{-1}$])  \cr
+E & phot.flux & Photon flux or irradiance or energy flux (dimension: [W L$^{-2}$])  \cr
+\sptablerule
+\caption{UCD words proposed upgrade}
+\label{tab:upgrade_he_ucds}
+\end{longtable}
+
+
+{\bf BKH: Karl, should we add the excess number? stat.excess or stat.fit.excess?}
 
 \subsection{MIME-types Enhancements}\label{sec:mimetypes}
 
@@ -483,10 +504,8 @@ Data files used in the \gls{HE} domain should have appropriate MIME-types, so th
 Formats based on FITS could thus be declared as:
 
 \begin{itemize}
-\item {\bf x-fits-gadf}: for FITS files following the GADF specification.
-% Needs input from relevant source
-\item {\bf x-fits-vodf}: for FITS files following the VODF specification.
-% Needs input from relevant source
+\item {\bf x-fits-gadf}: for FITS files following the GADF specification \citep{deil_2022_7304668}
+\item {\bf x-fits-vodf}: for FITS files following the VODF specification \citep{2023arXiv230813385K}
 \end{itemize}
 
 \pagebreak
