@@ -397,13 +397,21 @@ The proposed vocabulary entries are listed in Table~\ref{tab:dp_vocabulary} with
 
 \subsubsection{Clarification of ``flux'' in some term definitions}
 
-We propose to clarify the terms that use the word ``flux'' in the description of some terms, currently {\bf light-curve}, {\bf polarization-resolved-dataset}, {\bf polarized-spectrum}, and {\bf spectrum}, to determine whether they are applicable to \gls{HE} data.
+We propose to clarify the terms that use the word ``flux'' in the description of some terms, currently {\bf light-curve}, {\bf polarization-resolved-dataset}, {\bf pola-\\rized-spectrum}, and {\bf spectrum}, to be applicable to \gls{HE} data.
 
-The issue is that the term ``flux'' is not defined, and the standard astronomical definition of ``flux''
-%for at least the last century
-is an energy flux (with SI units $\rm W\,m^{-2}$).  This interpretation is bolstered by the statements ``flux or magnitude'' applied to several of the descriptions since optical/IR magnitude and energy flux density are tightly related.  However, with this definition many \gls{HE} data products (that typically have units of counts) would not satisfy the descriptions of a light-curve or a spectrum, even though those terms are commonly used by the \gls{HE} community.
+The issue is that the term ``flux'' is not well defined, and the standard astronomical definition of ``flux''
+is an energy flux (with SI units $\rm W\,m^{-2}$).  This interpretation is bolstered by the statements ``flux or magnitude'' applied to several of the descriptions since optical/IR magnitude and energy flux density are tightly related.  However, with this definition, many \gls{HEA} data products (that have also units of counts) would not satisfy the descriptions of a light-curve or a spectrum. We often use a few definitions of flux:
+\begin{itemize}
+  \item particle flux, units=[counts/m2/s],
+  \item particle flux per steradian, units=[counts/m2/s/str],
+  \item particle flux density (or differential particle flux,) units=[counts/m2/s/TeV],
+  \item energy flux, units=[W/m2],
+  \item energy flux per steradian ({\em i.e.\/} radiance), units=[W/m2/str],
+  \item energy flux density (or differential energy flux), units=[W/m2/str/TeV],
+\end{itemize}
+And these are not all covered by UCD vocabulary.
 
-Restating the descriptions to explicitly state ``Particle or energy flux or magnitude'' where appropriate would resolve this ambiguity.
+Restating the descriptions to explicitly state ``Particle or energy flux or magnitude'' where appropriate would resolve this ambiguity associated to unit confusions.
 
 
 \subsection{DataLink vocabularies}\label{sec:DLs}
