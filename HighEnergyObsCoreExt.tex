@@ -296,6 +296,13 @@ Some \gls{HEA} instruments allow data to have event partitioning based on a data
 
 We propose to add an optional attribute {\bf event\_type} that specifies the data quality flag for an observation. It will allow the data provider to split the event list into several event lists labelled by an unique {\bf event\_type} for a given observation, and to distribute their associated \glspl{IRF}. Constraints on event type can provide a simple way to discover data sets for a specific facility/instrument combination and to reduce the downloaded data volume. We note that permissible {\bf event\_type} values will vary from facility to facility and from instrument to instrument.
 
+\subsection{Additional Columns}
+
+Like for the ObsCore Recommandations, it is allowed to add any additional columns that a data provider aims to add. This should be done as for the additional columns in ObsCore:
+
+\begin{quote}
+Service providers may include additional columns in the ivoa.\\ObsCore table to expose additional metadata. These columns must be described in the {\it TAP\_SCHEMA.columns} table and in the output from the VOSI-tables resource \citep{2017ivoa.spec.0524G}. Users may access these columns by examining the column metadata for individual services and then using them explicitly in queries or by selecting all columns in the query ({\em e.g.\/} ``select * from ivoa.ObsCore ...'' in an ADQL query). In order to provide homogeneity in the keywords used as optional fields, we recommend where possible to use the items defined in the full data model of ObsCore and flagged as optional. ObsTAP compliant services will support all columns defined as mandatory and possibly some of the optional ones. Queries built up using additional columns defined specifically for a given archive might not be portable.
+\end{quote}
 
 \section{Vocabulary Enhancements}
 \label{sec:voc}
@@ -303,56 +310,34 @@ We propose to add an optional attribute {\bf event\_type} that specifies the dat
 \subsection{Evolution of the Data Product Type vocabulary}
 \label{sec:voc_product_type}
 
-The \gls{IVOA} Data Product Type Vocabulary (\url{http://www.ivoa.net/rdf/product-type}) provides terms, labels, and descriptions for many types of astronomical data products. However, there are some additions and changes that are appropriate to better support \gls{HEA} datasets.
+The \gls{IVOA} Data Product Type Vocabulary\footnote{See \url{http://www.ivoa.net/rdf/product-type}.} provides terms, labels, and descriptions for many types of astronomical data products. However, there are some additions and changes that are appropriate to better support \gls{HEA} datasets.
 
-%----- commented as redundant with moved text from section 3.1
-%We propose to add vocabulary entries for the data product types outlined in \S~\ref{sec:dataproduct_type} ({\em i.e.\/}, {\bf event-bundle}, {\bf draws}, {\bf pdf}, {\bf region}, {\bf response-function}) and also propose to slightly modify the existing definition of {\bf event-list} so that it aligns more accurately with the definition in \S~\ref{sec:dataproduct_type}.  Additionally, we propose to add several more specific entries to the data product type vocabulary that specialize these types (especially {\bf response-function}).  Any future revision of the ObsCore Recommendation to use the IVOA Data Product Type Vocabulary in preference to the enumerated values for {\em dataproduct\_type\/} would profit from these additional vocabulary entries.
-
-%----- from section 3.1, moved to section 5 on Vocabularies
 
 \subsubsection{Event list}
 
 We first propose to better define an {\bf event-list}:
 
 \begin{quote}
-{\bf event-list}: A dataset containing a collection of observed events, such as incoming \gls{HE} particles, where an event is typically characterized by a spatial position, a time, and a spectral value ({\em e.g.\/}, an energy, a channel, a pulse height)
+{\bf event-list}: A dataset containing a collection of observed particle-detection events, such as incoming \gls{HEA} particles, where an event is typically characterized by a spatial position, a time, and a spectral value ({\em e.g.\/}, an energy, a channel, a pulse height)
 \end{quote}
 
 \subsubsection{Response functions}
 
-We then propose to add the following product types to define the different response functions (e.g. \glspl{IRF}) generally used in \gls{HE}:
+We then propose to add the following product types to define the different response functions (e.g. \glspl{IRF}) generally used in \gls{HEA}:
 
 \begin{quote}
 {\bf response-function}: A dataset that maps a physical quantity to an observable. Narrower terms can be used to indictate more precisely the response function.
-%This term is mainly intended for retrieval. To annotate datasets, use a narrower term.
-\end{quote}
 
-% \begin{quote}
-% {\bf response-function}:
-% A dataset that represents a mapping from a physical quantity to an observable.  For HEA this may be the components of the composite Instrument Response Function (IRF)\footnote{We try to avoid using the term IRF in a normative sense since historical usage across the HEA community (and from facility to facility) varies.  In some cases IRF has been used to mean specifically the product of the ARF and RMF, whereas in other cases IRF has been used more generally to mean {\em any\/} instrumental response function regardless of type.} such as an Auxiliary Response File (ARF), Redistribution Matrix File (RMF), Effective Area (AEFF), Energy Dispersion (EDISP), and so on.  The Point Spread Function (PSF) is a response-function that is generally applicable across multiple wavebands.  While these datasets may generally be represented as an {\em N\/}-dimensional data cube, designating them as {\bf response-function}s enhances data discovery for very common types of HEA dataset.
-% \end{quote}
+{\bf aeff}: A dataset that records the ``effective area'' of a telescope and/or instrument.  The effective area is the geometric area of the telescope and/or instrument reduced by efficiency factors such as reflectivity and vignetting, among other effects\footnote{See \url{https://gamma-astro-data-formats.readthedocs.io/en/latest/irfs/irf_components/index.html} from the ``Data Formats for Gamma-ray Astronomy'' format \citep{deil_2022_7304668}.}.
 
-\begin{quote}
-{\bf aeff}: A dataset that records the ``effective area'' of a telescope and/or instrument.  The effective area is the geometric area of the telescope and/or instrument reduced by efficiency factors such as reflectivity and vignetting, among other effects.\footnote{Data Formats for Gamma-ray Astronomy \citep{deil_2022_7304668} (\url{https://gamma-astro-data-formats.readthedocs.io/en/latest/irfs/irf_components/index.html}).}
-\end{quote}
+{\bf edisp}: A dataset that records the probability density of detecting an event with an energy estimator (proxy) given the true energy of the event \citep{deil_2022_7304668}.
 
-\begin{quote}
-{\bf edisp}: A dataset that records the probability density function for the energy migration as a function of true energy and spatial position \citep{deil_2022_7304668}.
-\end{quote}
+{\bf bkgrate}: A dataset that models the rate of residual events that are not from the expected source type ({\em e.g.\/} for gamma-ray instrument it measures residual non-gamma-ray events coming from charged cosmic rays)  \citep{deil_2022_7304668}.
 
-\begin{quote}
-{\bf bkgrate}: A dataset that records the rate of residual atmospheric cosmic-ray events \citep{deil_2022_7304668}.
-\end{quote}
+{\bf psf}: A dataset that records the probability density function of spatial/angular spreading of incident photons from a point source caused by the instrument (detector and/or mirror and/or analysis) \citep{deil_2022_7304668, ogip_psf_2011}.
 
-\begin{quote}
-{\bf psf}: A dataset that records the probability density function of spatial/angular spreading of incident photons from a point source caused by the instrument (detector and/or mirror and/or analysis) \citep{deil_2022_7304668, ogip_psf_2011}
-\end{quote}
+{\bf arf}: A dataset that records the combined telescope/instrument effective area and detector quantum efficiency as a function of energy \citep{ogip_spectrum_1998}.
 
-\begin{quote}
-{\bf arf}: A dataset that records the combined telescope/instrument effective area and detector quantum efficiency as a function of energy \citep{ogip_spectrum_1998}
-\end{quote}
-
-\begin{quote}
 {\bf rmf}: A dataset that records the probability density function mapping from energy space into detector pulse height (or position) space \citep{ogip_spectrum_1998}.
 \end{quote}
 
@@ -361,12 +346,12 @@ We then propose to add the following product types to define the different respo
 Some use cases  require access to an {\bf event-bundle}, a bundle of datasets that includes the {\bf event-list} and associated  data:
 
 \begin{quote}
-{\bf event-bundle}: An event-bundle dataset is a complex object containing an {\bf event-list} and multiple files or other substructures that are products necessary to analyze the {\bf event-list}. Data in an event-bundle may thus be used to produce calibrated, higher level data products such as images or spectra.
+{\bf event-bundle}: compounded dataset containing an {\bf event-list} and multiple files or other substructures that are products necessary to analyze the event-list. Data in an event-bundle may thus be used to produce higher level data products such as images or spectra when containing \glspl{IRF}.
 \end{quote}
 
 An {\bf event-bundle} might for example consist of an {\bf event-list} and the associated {\bf response-function}s used to calibrate the dataset.
 %; alternatively an {\bf event-bundle} may include the {\bf event-list}  and associated ancillary data products necessary for the user to {\em create\/} the {\bf response-function}s (for those cases where detailed knowledge of the scientific use case --- for example, the user's selection of events --- may be required to compute the responses).
-It may also contain provenance information, and preview images or plots.
+It may also contain provenance information, data quality time-series, and preview images or plots.
 
 \subsubsection{Advanced data products}
 
