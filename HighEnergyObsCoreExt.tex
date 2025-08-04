@@ -121,14 +121,14 @@ In the following, the current ObsCore standard will be discussed in Section \ref
 \section{ObsCore Attribute Definitions for High Energy Astrophysics Data}
 \label{sec:obscore}
 
-The ObsCore representation of \gls{HEA} \textbf{event-list} data products is described in terms of curation, coverage, and access.  However, following the ObsCore Recommendation, several properties, including resolutions, observable axis descriptions, and polarization states are simply set to NULL, and data axis lengths are set to $-1$.  Therefore, for these data products and associated IRFs, the definitions of some ObsCore attributes should be adjusted so that they better represent the content of the data from the perspective of data discovery. These adjustments will also typically apply to advanced, high-level data products derived from \textbf{event-list} data.
+The ObsCore representation of any \gls{HEA} \textbf{event-list} data products is described in terms of curation, coverage, and access. However, given the \gls{HEA} data specificities, several properties, including resolutions, observable axis descriptions, and polarization states would be simply set to ``NULL'', and data axis lengths are set to ``$-1$''.  Therefore, for these data products and associated \glspl{IRF}, the definitions of some ObsCore attributes should be adjusted so that they better represent the content of the data from the perspective of data discovery. We note that many properties, including spatial and spectral coverage and resolution can vary strongly with energy and off-axis angle. These adjustments will also typically apply to advanced, high-level data products derived from \textbf{event-list} data.
 
-We note that many properties, including spatial and spectral coverage and resolution can vary strongly with energy and off-axis angle.
+In addition, the hereafter modification proposal faces to the issue that some values of ObsCore attributes ({\em dataproduct\_type} and {\em calib\_level}) are defined both into the Obscore standard document \citep{2017ivoa.spec.0509L} and in the vocabularies documents \citep{2023ivoa.spec.0206D, 2021ivoa.spec.0525D}, which might create some issues for the users. In this context, we have opted to propose modifications of both standards in this document, even if we would have been prefered that everything is uniquely defined in the \gls{IVOA} Vovabulary. Some harmonization should be taken by the Data Model and Semantics working groups in order to avoid duplications.
 
 \subsection{{\em dataproduct\_type}}
 \label{sec:dataproduct_type}
 
-The attribute {\em dataproduct\_type\/} provides a high level scientific classification of the data product and is of primary importance for data discovery, especially when there may be many different types of data product associated with an observation\footnote{We use the term ``observation'' in the broad sense, as is done in the ObsCore Recommendation. We note that in this context an ``observation'' may not correspond to a single pointed observation defined in the traditional sense.} (as is often the case for \gls{HEA} datasets).
+The attribute {\em dataproduct\_type\/} provides a scientific classification of the data product and is of primary importance for data discovery, especially when there may be many different types of data product associated with an observation\footnote{We use the term ``observation'' in the broad sense, as is done in the ObsCore Recommendation. We note that in this context an ``observation'' may not correspond to a single pointed observation defined in the traditional sense.} (as is often the case for \gls{HEA} datasets).
 
 The ObsCore v1.1 recommendation \citep{2017ivoa.spec.0509L} only defines an {\bf event} {\em dataproduct\_type} as:
 
@@ -136,23 +136,52 @@ The ObsCore v1.1 recommendation \citep{2017ivoa.spec.0509L} only defines an {\bf
 {\bf event}: an event-counting ({\em e.g.\/}, X-ray or other high energy) dataset of some sort. Typically this is instrumental data, {\em i.e.\/}, ``event data''.  An event dataset is often a complex object containing multiple files or other substructures. An event dataset may contain data with spatial, spectral, and time information for each measured event, although the spectral resolution (energy) is sometimes limited. Event data may be used to produce higher level data products such as images or spectra.
 \end{quote}
 
-An \gls{IVOA} vocabulary is being developed for Product Types\footnote{https://www.ivoa.net/rdf/product-type} were the term \textbf{event-list} is proposed as a replacement:
+We propose to add the following {\em dataproduct\_type} term in both the Obscore standard and into the \gls{IVOA} vocabulary is of Product Types\footnote{See \url{https://www.ivoa.net/rdf/product-type}.} to better define a \gls{HEA} \textbf{event-list} and a  \textbf{event-list} that includes the event-list and its associated data:
 
 \begin{quote}
-{\bf event-list}: a collection of observed events, such as incoming high-energy particles. The table of event list is typically characterised by a spatial position, a time and an energy proxy.
+{\bf event-list}: a collection of observed events, such as incoming high-energy particles. The table of event list is typically characterised by a spatial position, a time and an energy proxy. 
+
+{\bf event-bundle}: compounded dataset containing an {\bf event-list} and multiple files or other substructures that are products necessary to analyze the event-list. Data in an event-bundle may thus be used to produce higher level data products such as images or spectra when containing \glspl{IRF}.
 \end{quote}
 
-In the context of \gls{HEA}, we propose to redefine \textbf{event-list}, and add new terms for response functions, as well as for several advanced data products found in \gls{HEA} archives (see section \ref{sec:voc_product_type}). The concept of an \textbf{event-bundle} containing an event list and the relevant associated data products is also important for \gls{HEA} data dissemination.
+It may be worth mentioning that the term ``event'' caused confusion in the past, as it also is used for astrophysical events like supernova explosions (e.g. VOEvent), and that is not the type of event that is being described here, which are particle detection events. Using "event-list" was meant to help to resolve this ambiguity.
 
-repetition + "It may be worth mentioning, maybe just in a footnote, that the term "event" caused confusion in the past, as it also is used for astrophysical events like supernova explosions (e.g. VOEvent), and that is not the type of event that is being described here, which are particle detection events. Using "event-list" was meant to help to resolve this ambiguity."
+An {\bf event-bundle} might for example consist of an {\bf event-list} and the associated {\bf response-functions} (see below) used to calibrate the dataset; alternatively an {\bf event-bundle} may include the {\bf event-list} and associated  data products necessary for the user to create the {\bf response-functions} (for those X-ray cases where detailed knowledge of the scientific use case — for example, the user’s selection of events — may be required to compute the responses).\\
+
+In addition to {\em dataproduct\_type} terms that focus on event data, we note that existing ObsCore definitions do not adequately span the breadth of advanced data products (with {\em calib\_level} $\ge$ 3) that may be generated from astronomical observations by users or observatories. The computational complexity of analyzing \gls{HEA} data robustly in the extreme Poisson regime (e.g., Bayesian X-ray aperture photometry applied simultaneously to multiple overlapping detections and ob-
+servations) means that data providers may choose to provide such analysis products directly to the end user. For example, the Chandra Source Catalog includes 38 types of advanced data products (for a total of $\sim$90 million files) and $\sim$50\% of these data product types are not well represented by a  {\em dataproduct\_type} value that allows for meaningful data discovery. Users will certainly want to discover these data products independently from the associated observation data (and many of these data products combine data from multiple observations). We therefore propose the following additional
+{\em dataproduct\_type} (or {\em dataproduct\_subtype}) terms for these advanced data products, and note that these terms will certainly be useful independent of waveband (i.e., they can be equally applicable to UV/optical, IR, and radio datasets):
+
+\begin{quote}
+{\bf draws}: a dataset that represents draws computed from a probability distribution, for example the Markov chain Monte Carlo (MCMC) draws used when computing the Bayesian marginal probability density function for a random variable. The draws
+can be interpreted to provide a robust estimation of the probability distribution of variable, and correlations between the draws provide information about how well the draws converge to the parent probability distribution.
+
+{\bf pdf}: a dataset that represents the probability density function of a quantity, for example the Bayesian marginal probability density  function for a random variable. The probability density function provides a robust estimation of the variable and allows arbitrary confidence intervals to be computed directly from the distribution.
+
+{\bf region}: a dataset that includes an encoding of (one or more) regions of parameter space, for example a spatial region or a region of phase space covered by a dataset. The set of dimensions represented by the region can be arbitrary.
+
+{\bf response-function}: a dataset that represents a mapping from a physical quantity to an observable. For \gls{HEA}, this may be the components of the composite \gls{IRF}\footnote{We try to avoid using the term \gls{IRF} in a normative sense since historical usage across the broad \gls{HEA} community (and from facility to facility) varies. In some cases, \gls{IRF} has been used to mean specifically the X-ray product of the ``ARF'' and ``RMF'', whereas in other cases \gls{IRF}
+has been used more generally to mean any instrumental response function regardless of type.} such as an Auxiliary Response File ({\bf ARF}), Redistribution Matrix File ({\bf RMF}), Effective Area ({\bf AEFF}), Energy Dispersion ({\bf EDISP}), the Background Rate ({\bf BKGRATE}). The Point Spread Function ({\bf PSF}) is a response function that is generally applicable across multiple wavebands. While these datasets may generally be represented as an N-dimensional data cube, designating them as {\bf response-functions} enhances data discovery for very common types of \gls{HEA} dataset (see the use cases in appendix \ref{sec:uc}).
+
+\end{quote}
+
+
+The {\bf measurements} data product type is quite useful for many different types of advanced data products (that may be derived from multiple observations) but users of those products often may not be interested the progenitor datasets, especially if many advanced data products are extracted from a single or a few progenitors (e.g., {\bf measurements associated with sources detected in a single observation field}). We propose to delete the caveat associated with {\bf dataproduct\_type} = ``measurements'' in the ObsCore IVOA Recommendation (\S4.1.1) that requires the derived data products be exposed ``together with the progenitor observation dataset''.\\
+
+
+Note that these terms will be repeated in the section \ref{sec:voc}, as mentioned in the introduction of this sub-section.
 
 \subsection{{\em dataproduct\_subtype}}
 
-The optional attribute {\em dataproduct\_subtype} may be used by the data provider to specify additional information about the nature of the data product. For some datasets this attribute may specify the data level ({\em e.g.\/}, DL3--6, see \citealt{2024ivoa.note.heig}, \S3.1.2), or may be combined with {\em dataproduct\_type\/} to more precisely define the content of the dataset ({\em e.g.\/}, {\em dataproduct\_type\/} = {\bf image}${}+{}${\em dataproduct\_subtype\/} = {\bf exposuremap}).  A vocabulary of such data product (sub-)types should be developed to support discovery of advanced data products.
+The optional attribute {\em dataproduct\_subtype} may be used by the data provider to specify additional information about the nature of the data product. For some datasets this attribute may specify the data level ({\em e.g.\/}, DL3--6, see \citealt{2024ivoa.note.heig}, \S3.1.2), or may be combined with {\em dataproduct\_type\/} to more precisely define the content of the dataset ({\em e.g.\/}, {\em dataproduct\_type\/} = {\bf image}${}+{}${\em dataproduct\_subtype\/} = {\bf exposuremap}). A vocabulary of such data product (sub-)types is proposed in section \ref{sec:voc} to support discovery of advanced data products.
 
-% but rmf is proposed in product-type...
 
 \subsection{{\em calib\_level}}
+
+
+KK: For {\bf event-list}s, we propose that the calibration status of the spatial/spectral/time data axes be identified using the appropriate axis {\em calib\_status\/} keyword ({\em s\_calib\_status\/} for the spatial axes, {\em em\_calib\_status\/} for the spectral axis, and {\em t\_calib\_status\/} for the time axis).
+
+
 
 ObsCore defines calibration {\bf Level 1} as ``Instrumental data in a standard format (FITS, VOTable, SDFITS, ASDM, etc.) which could be manipulated with standard astronomical packages.'' and {\bf Level 2} as ``Calibrated, science ready data with the instrument signature removed.''
 
@@ -238,7 +267,6 @@ To support advanced data products that may be constructed using data from multip
 
 \section{Extensions to ObsCore Specific to High Energy Astrophysics Data}
 \label{sec:obscoreext}
-\label{sec:voc}
 
 \subsection{{\em ev\_xel}}
 
@@ -279,6 +307,7 @@ Some HEA instruments allow data to be reduced/analyzed in multiple ways and thes
 % Need more input/justification from facilities that support these capabilities
 
 \section{Vocabulary Enhancements}
+\label{sec:voc}
 
 While the IVOA Data Product Type Vocabulary (\url{http://www.ivoa.net/rdf/product-type}) provides terms, labels, and descriptions for many types of astronomical data products, there are some additions and changes that are appropriate to better support HEA datasets.
 
@@ -347,6 +376,7 @@ For VHE (and GeV) data there is the notion of event type that can be mandatory f
 
 
 \section{Detailed Science Use Cases for ObsCore}
+\label{sec:uc}
 
 \input{UseCases.tex}
 
