@@ -123,7 +123,7 @@ In the following, the current ObsCore standard will be discussed in Section \ref
 
 The ObsCore representation of any \gls{HEA} \textbf{event-list} data products is described in terms of curation, coverage, and access. However, given the \gls{HEA} data specificities, several properties, including resolutions, observable axis descriptions, and polarization states would be simply set to ``NULL'', and data axis lengths are set to ``$-1$''.  Therefore, for these data products and associated \glspl{IRF}, the definitions of some ObsCore attributes should be adjusted so that they better represent the content of the data from the perspective of data discovery. We note that many properties, including spatial and spectral coverage and resolution can vary strongly with energy and off-axis angle. These adjustments will also typically apply to advanced, high-level data products derived from \textbf{event-list} data.
 
-In addition, the hereafter modification proposal faces to the issue that some values of ObsCore attributes ({\em dataproduct\_type} and {\em calib\_level}) are defined both into the Obscore standard document \citep{2017ivoa.spec.0509L} and in the vocabularies documents \citep{2023ivoa.spec.0206D, 2021ivoa.spec.0525D}, which might create some issues for the users. In this context, we have opted to propose modifications of both standards in this document, even if we would have been prefered that everything is uniquely defined in the \gls{IVOA} Vovabulary. Some harmonization should be taken by the Data Model and Semantics working groups in order to avoid duplications.
+In addition, the hereafter modification proposal faces to the issue that some values of ObsCore attributes ({\em dataproduct\_type} and {\em calib\_level}) are defined both into the Obscore standard document \citep{2017ivoa.spec.0509L} and in the vocabularies documents \citep{2023ivoa.spec.0206D, 2021ivoa.spec.0525D}, which might create some issues for the users. In this context, we have opted to propose  in this document some modifications of both standards, even if we would have prefered that everything is uniquely defined in the \gls{IVOA} Vocabulary. Some harmonization should be taken by the Data Model and Semantics working groups in order to avoid duplications. But until such work is achieved, we require modifications in ObsCore and Vocabulary.
 
 \subsection{{\em dataproduct\_type}}
 \label{sec:dataproduct_type}
@@ -178,24 +178,19 @@ The optional attribute {\em dataproduct\_subtype} may be used by the data provid
 
 \subsection{{\em calib\_level}}
 
-KK: For {\bf event-list}s, we propose that the calibration status of the spatial/spectral/time data axes be identified using the appropriate axis {\em calib\_status\/} keyword ({\em s\_calib\_status\/} for the spatial axes, {\em em\_calib\_status\/} for the spectral axis, and {\em t\_calib\_status\/} for the time axis).
-
-
-
 ObsCore defines calibration {\bf Level 1} as ``Instrumental data in a standard format (FITS, VOTable, SDFITS, ASDM, etc.) which could be manipulated with standard astronomical packages.'' and {\bf Level 2} as ``Calibrated, science ready data with the instrument signature removed.''
 
-However, many \gls{HEA} {\bf event-list}s include spatial and time axes that are calibrated physical quantities, but the spectral axis is instrumental and requires application of the IRFs to remove this signature.  This is typically done because the {\bf response-funtion}s can depend on the choice of region (spatial/time) from which the events are extracted (especially for telescope/detector combinations where the telescope position dithers on the sky during the exposure), which depends on the specific science case and therefore cannot be determined {\em a priori\/}.  Such {\bf event-list}s fall ``between'' {\em calib\_level\/} 1 and 2.
+However, some \gls{HEA} {\bf event-list}s include spatial and time axes that are calibrated physical quantities, but the spectral axis is instrumental and requires application of the IRFs to remove this signature. In X-ray, this is typically done because the {\bf response-funtion}s can depend on the choice of region (spatial/time) from which the events are extracted (especially for telescope/detector combinations where the telescope position dithers on the sky during the exposure), which depends on the specific science case and therefore cannot be determined {\em a priori\/}.  Such {\bf event-list}s fall ``between'' {\em calib\_level\/} 1 and 2.
 
-On the other hand, other {\bf event-list}s may not have any calibrated axes or may have all axes calibrated, and it is important to be able to differentiate between these for data discovery.  While the value for {\em calib\_level\/} for any data product is left for the data provider to determine, we suggest that individual data providers set {\em calib\_level\/} = 1 if an {\bf event-list} is considered to be ``uncalibrated'' according to normal usage for their data products and set {\em calib\_level\/} = 2 if an {\bf event-list} is considered to be ``calibrated'' according to normal usage for their data products.
+On the other hand, other {\bf event-list}s may not have any calibrated axes or may have all axes calibrated, and it is important to be able to differentiate between these for data discovery.  While the value for {\em calib\_level\/} for any data product is left for the data provider to determine, we suggest that individual data providers set {\em calib\_level\/} = 1 if an {\bf event-list} is considered to be ``uncalibrated'' according to normal usage for their data products and set {\em calib\_level\/} = 2 if an {\bf event-list} is considered to be ``calibrated'' according to normal usage for their data products. Also, we propose that the calibration status of the spatial/spectral/time data axes be identified using the appropriate axis ObsCore {\em calib\_status\/} keyword ({\em s\_calib\_status\/} for the spatial axes, {\em em\_calib\_status\/} for the spectral axis, and {\em t\_calib\_status\/} for the time axis).
 
 \subsection{{\em access\_url}}
 
-Given the complexity and number of HE data products, the {\em access\_url} may point either directly to a file (e.g. to the event-list or an event-bundle), or to a DataLink service that will provide links to the data and to associated data (e.g. response functions).
+Given the complexity and number of HE data products, the {\em access\_url} may point either directly to a file (e.g. to the {\bf event-list} or an {\bf event-bundle}), or to a DataLink service that will provide links to the data and to associated data (e.g. response functions).
 
 If DataLink is provided, it should be indicated that the URL points to a Datalink service via the {\em access\_format} = application/x-votable+xml;content\\=datalink.
 
 If the {\em access\_url} points to a bundle, the detailed content of the bundle is not exposed; therefore using a DataLink service has advantages.
-
 
 \subsection{{\em access\_format}}
 
