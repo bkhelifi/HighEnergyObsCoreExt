@@ -119,6 +119,7 @@ Though \textbf{event-lists} \emph{may} include estimators for calibrated physica
 In the following, the current ObsCore standard will be discussed in Section \ref{sec:obscore}, focusing on attributes that need to be modified. Then, we propose the creation of a \gls{HEA} extension of ObsCore in Section \ref{sec:obscoreext}, as some attributes are very specific to our domain. In these two sections, the discussion focuses on the attribute definitions rather on the attribute values. In Section \ref{sec:voc}, enhancement of vocabulary is proposed for some ObsCore attributes, DataLink semantics, UCDs and MIME-types.
 
 \section{ObsCore Attribute Definitions for High Energy Astrophysics Data}
+\label{sec:obscore}
 
 The ObsCore representation of \gls{HEA} \textbf{event-list} data products is described in terms of curation, coverage, and access.  However, following the ObsCore Recommendation, several properties, including resolutions, observable axis descriptions, and polarization states are simply set to NULL, and data axis lengths are set to $-1$.  Therefore, for these data products and associated IRFs, the definitions of some ObsCore attributes should be adjusted so that they better represent the content of the data from the perspective of data discovery. These adjustments will also typically apply to advanced, high-level data products derived from \textbf{event-list} data.
 
@@ -206,7 +207,7 @@ We propose that {\em em\_calib\_status}  encode the calibration status of an {\b
 
 Under the (reasonable) assumption that an end-user searching for {\bf event-bundle} datasets is typically querying based on the properties of the primary {\bf event-list} we suggest that those values also be used for the {\bf event-bundle}.  However, the data provider should ultimately decide which value best describes their {\bf event-bundle} dataset.
 
-For dataset types that do not not encode spectral coordinates, we suggest setting this value to NULL\null.
+For dataset types that do not encode spectral coordinates, we suggest setting this value to NULL\null.
 
 \subsection{{\em o\_ucd}}
 
@@ -233,6 +234,8 @@ To support advanced data products that may be constructed using data from multip
 
 
 \section{Extensions to ObsCore Specific to High Energy Astrophysics Data}
+\label{sec:obscoreext}
+\label{sec:voc}
 
 \subsection{{\em ev\_xel}}
 
