@@ -83,6 +83,8 @@
 
 \begin{abstract}
 This is a proposed extension to the ObsCore specification for data description, discovery and selection of High Energy Astrophysics (HEA) data, and includes proposed updates to the data product vocabulary, UCDs, and MIME-types to support discovery of HEA data.
+This is a proposed extension to the ObsCore specification for data description, discovery and selection of \gls{HEA} data, and includes proposed updates to the data product vocabulary, UCDs, and MIME-types to support discovery of \gls{HEA} data.
+
 \end{abstract}
 
 
@@ -115,14 +117,14 @@ Observations of the Universe at high energies are based on techniques that are r
 
 \section{ObsCore Attribute Definitions for High Energy Astrophysics Data}
 
-The ObsCore representation of HEA {\bf event-list} data products is described in terms of curation, coverage, and access.  However, following the ObsCore Recommendation, several properties, including resolutions, observable axis descriptions, and polarization states are simply set to NULL, and data axis lengths are set to $-1$.  Therefore, for these data products and associated IRFs, the definitions of some ObsCore attributes should be adjusted so that they better represent the content of the data from the perspective of data discovery.  These adjustments will also typically apply to advanced, high-level data products derived from {\bf event-list} data.
+The ObsCore representation of \gls{HEA} \textbf{event-list} data products is described in terms of curation, coverage, and access.  However, following the ObsCore Recommendation, several properties, including resolutions, observable axis descriptions, and polarization states are simply set to NULL, and data axis lengths are set to $-1$.  Therefore, for these data products and associated IRFs, the definitions of some ObsCore attributes should be adjusted so that they better represent the content of the data from the perspective of data discovery. These adjustments will also typically apply to advanced, high-level data products derived from \textbf{event-list} data.
 
 We note that many properties, including spatial and spectral coverage and resolution can vary strongly with energy and off-axis angle.
 
 \subsection{{\em dataproduct\_type}}
 \label{sec:dataproduct_type}
 
-The attribute {\em dataproduct\_type\/} provides a high level scientific classification of the data product and is of primary importance for data discovery, especially when there may be many different types of data product associated with an observation\footnote{We use the term ``observation'' in the broad sense, as is done in the ObsCore Recommendation.  We note that in this context an ``observation'' may not correspond to a single pointed observation defined in the traditional sense.} (as is often the case for HEA datasets).
+The attribute {\em dataproduct\_type\/} provides a high level scientific classification of the data product and is of primary importance for data discovery, especially when there may be many different types of data product associated with an observation\footnote{We use the term ``observation'' in the broad sense, as is done in the ObsCore Recommendation. We note that in this context an ``observation'' may not correspond to a single pointed observation defined in the traditional sense.} (as is often the case for \gls{HEA} datasets).
 
 The ObsCore v1.1 recommendation \citep{2017ivoa.spec.0509L} only defines an {\bf event} {\em dataproduct\_type} as:
 
@@ -130,13 +132,13 @@ The ObsCore v1.1 recommendation \citep{2017ivoa.spec.0509L} only defines an {\bf
 {\bf event}: an event-counting ({\em e.g.\/}, X-ray or other high energy) dataset of some sort. Typically this is instrumental data, {\em i.e.\/}, ``event data''.  An event dataset is often a complex object containing multiple files or other substructures. An event dataset may contain data with spatial, spectral, and time information for each measured event, although the spectral resolution (energy) is sometimes limited. Event data may be used to produce higher level data products such as images or spectra.
 \end{quote}
 
-An IVOA vocabulary is being developed for Product Types\footnote{https://www.ivoa.net/rdf/product-type} were the term {\bf event-list} is proposed as a replacement:
+An \gls{IVOA} vocabulary is being developed for Product Types\footnote{https://www.ivoa.net/rdf/product-type} were the term \textbf{event-list} is proposed as a replacement:
+
 \begin{quote}
-{\bf event-list}: a collection of observed events, such as incoming high-energy particles. A row in an event list is typically characterised by a spatial position, a time and an energy.
+{\bf event-list}: a collection of observed events, such as incoming high-energy particles. The table of event list is typically characterised by a spatial position, a time and an energy proxy.
 \end{quote}
 
-In the context of \gls{HE}, we propose to redefine {\bf event-list}, and add new terms for response functions, as well as for several advanced data products found in \gls{HE} archives (see section \ref{sec:voc_product_type}). The concept of an {\bf event-bundle} containing an event list and the relevant associated data products is also important for HE data dissemination.
-
+In the context of \gls{HEA}, we propose to redefine \textbf{event-list}, and add new terms for response functions, as well as for several advanced data products found in \gls{HEA} archives (see section \ref{sec:voc_product_type}). The concept of an \textbf{event-bundle} containing an event list and the relevant associated data products is also important for \gls{HEA} data dissemination.
 
 \subsection{{\em dataproduct\_subtype}}
 
