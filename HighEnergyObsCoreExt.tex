@@ -229,15 +229,19 @@ For dataset types that do not encode spectral coordinates, we suggest setting th
 
 For an {\bf event-list}, we can consider that all measures stored in column values are observables. This is {\em the\/} fundamental difference between \gls{HEA} {\bf event-list}s and typical pixelated datasets. The current ObsCore Recommendation suggests that {\em o\_ucd\/} be set to ``NULL'' for event lists. However this significantly hampers data discovery for \gls{HEA} datasets. Since the data content of {\bf event-list}s may vary significantly from facility to facility, meaningful discovery of \gls{HEA} datasets {\em requires\/} the user be able to query the UCDs of the set of observables included in an {\bf event-list}.
 
-A natural way of doing this that is consistent with current usage would be to extend {\em o\_ucd\/} to allow specification of {\em multiple\/} observables for {\bf event-list}s (and {\bf event-bundle}s), for example, {\em o\_ucd\/} = {\em pos.eq,time,phys.pulseHeight\/}.
+A natural way of doing this that is consistent with current usage would be to extend {\em o\_ucd\/} to allow specification of {\em multiple\/} observables for {\bf event-list}s (and {\bf event-bundle}s), for example, {\em o\_ucd\/} = {\em pos.eq,time,instr.pulseHeight\/}.
+
+However, the UCD standard \citep{2005ivoa.spec.0819D} states explicitly that such type of combinaison with a comma is used to better describe one column. So, an other synthax could be use of used, using a semicolon to separate the UCDs of different column. Using the previous example, it will become {\em o\_ucd\/} = {\em pos.eq;time;instr.pulseHeight\/}.
+
+We note that extending {\em o\_ucd\/} to allow specification of multiple observables would require similar adjustments to the other observable axis attributes {\em o\_unit}, {\em o\_calib\_status}, and {\em o\_stat\_err}.\\
 
 Note that real {\bf event-list}s may include an extensive set of columns ({\em e.g.\/}, a {\em Chandra\/} ACIS Level~1 {\bf event-list} includes $\sim\!20$ columns, depending on observing mode) and several columns may represent similar (but not identical) observables ({\em e.g.\/}, event position in detector pixel coordinates, projected onto the focal surface, corrected for geometric distortions, corrected for spacecraft dither motion, mapped to world coordinates).  Currently defined UCDs are not sufficiently fine-grained to be able to differentiate between these various cases. But that is likely not necessary, since for data discovery purposes the user is typically interested in the ``most calibrated'' properties in each of the spatial/spectral/time(/polarization) axes ({\em e.g.\/}, world coordinates in the above example).
 
-In the example {\em o\_ucd\/} above, the example UCD {\em phys.pulseHeight\/} is used to represent the detector Pulse Height Amplitude (PHA).  There is currently no UCD defined for a raw measure like PHA, but we propose the addition of {\em phys.pulseHeight\/} to the UCDList vocabulary, together with other UCDs that are relevant for \gls{HEA} data, in Section~\ref{sec:UCDs}.
+In the example {\em o\_ucd\/} above, the example UCD {\em instr.pulseHeight\/} is used to represent the detector Pulse Height Amplitude (PHA). There is currently no UCD defined for a raw measure like PHA, but we propose the addition of {\em instr.pulseHeight\/} to the UCDs list vocabulary, together with other UCDs that are relevant for \gls{HEA} data, in Section~\ref{sec:UCDs}.\\
 
 Advanced data products may similarly record multiple observables that can only be differentiated through their UCDs. For example, a {\em Chandra\/} Source Catalog {\bf pdf} dataset for a detection may include multiple marginalized probability density functions computed using a Bayesian X-ray aperture photometry algorithm in units of net counts, net count rates, photon fluxes, and energy fluxes in multiple apertures.  The observables recorded in the different MPDFs may be distinguished by their UCDs which then become relevant for data discovery when a user is searching for specific aperture photometry datasets.
 
-Finally, we note that extending {\em o\_ucd\/} to allow specification of multiple observables would require similar adjustments to the other observable axis attributes {\em o\_unit}, {\em o\_calib\_status}, and {\em o\_stat\_err}.
+For the \gls{HEA} products, one should also improve some statistical UCDs, that could be of use for other domains, like the cosmology. For instance, one should be able the confidence level of intervals, ie a probability. A typical example is the location error of a source, that could be defined at 68\%, 90\% of 95\%. Also, one should extend the UCD list with particles, new energy ranges (see \ref{sec:UCDs}), and also refine the definition of flux (see \ref{sec:flux}).
 
 
 \subsection{{\em proposal\_id}}
@@ -292,8 +296,9 @@ We propose to add an optional attribute {\bf analysis\_mode} that allows the dat
 
 
 \subsection{{\em event\_type}}
+\label{sec:evttype}
 
-Some \gls{HEA} instruments allow data to have event partitioning based on a data analyis quality associated with the reconstruction and the discrimination. Some analyses can flag each event by a quality label, partitioning the dataset into strictly disjoint event subsets. For each quality label, a set of \glspl{IRF} should be derived and can be render public\footnote{As made by the Fermi-LAT collaboration, \glspl{IRF} are produced for each event type: see \url{https://fermi.gsfc.nasa.gov/ssc/data/analysis/documentation/Cicerone/Cicerone_LAT_IRFs/IRF_overview.html}.}.
+Some \gls{HEA} instruments allow data to have event partitioning based on a data analysis quality associated with the reconstruction and the discrimination. Some analyses can flag each event by a quality label, partitioning the dataset into strictly disjoint event subsets. For each quality label, a set of \glspl{IRF} should be derived and can be render public\footnote{As made by the Fermi-LAT collaboration, \glspl{IRF} are produced for each event type: see \url{https://fermi.gsfc.nasa.gov/ssc/data/analysis/documentation/Cicerone/Cicerone_LAT_IRFs/IRF_overview.html}.}.
 
 We propose to add an optional attribute {\bf event\_type} that specifies the data quality flag for an observation. It will allow the data provider to split the event list into several event lists labelled by an unique {\bf event\_type} for a given observation, and to distribute their associated \glspl{IRF}. Constraints on event type can provide a simple way to discover data sets for a specific facility/instrument combination and to reduce the downloaded data volume. We note that permissible {\bf event\_type} values may vary from facility to facility and from instrument to instrument.
 
@@ -375,7 +380,7 @@ The {\bf measurements} data product type is quite useful for many different type
 The proposed vocabulary entries are listed in Table~\ref{tab:dp_vocabulary} with their label and parents.
 
 %\begin{landscape}
-\begin{longtable}{p{0.1\textwidth}p{0.2\textwidth}p{0.4\textwidth}p{0.15\textwidth}}
+\begin{longtable}{p{0.2\textwidth}p{0.2\textwidth}p{0.4\textwidth}p{0.15\textwidth}}
 \sptablerule
 \textbf{Term}  &  \textbf{Label} & \textbf{Description} &\textbf{Parent}\cr
 \sptablerule
@@ -399,6 +404,7 @@ The proposed vocabulary entries are listed in Table~\ref{tab:dp_vocabulary} with
 
 
 \subsubsection{Clarification of ``flux'' in some term definitions}
+\label{sec:flux}
 
 We propose to clarify the terms that use the word ``flux'' in the description of some terms, currently {\bf light-curve}, {\bf polarization-resolved-dataset}, {\bf pola-\\rized-spectrum}, and {\bf spectrum}, to be applicable to \gls{HEA} data.
 
@@ -415,48 +421,49 @@ is an energy flux (with SI units $\rm W\,m^{-2}$).  This interpretation is bolst
 
 These are not all covered by the UCD vocabulary. This would be particularly useful for cases where we actually should have the same UCDs as {\em e.g.\/} a Radio measurement, but where we use very different units. For example: Jansky and erg/cm2/s/TeV are both types of "spectral flux density", but the unit analysis doesn't agree due to frequency-energy equivalency.
 
-Restating the descriptions to explicitly state ``Particle or energy flux or magnitude'' where appropriate would resolve this ambiguity associated to unit confusions. These different type of fluxes will be proposed to be added in the UCD list.
+Restating the descriptions based on dimensions and not units, and this for photons and particles, would resolve this ambiguity associated to unit confusions. As consequence, a refinement of the UCD list is proposed in the section \ref{sec:UCDs}.
 
 
 \subsection{DataLink vocabularies}\label{sec:DLs}
 
 For some use cases, we proposed to expose the different associated datasets via Datalink. Each Datalink is described by several attributes, including the mandatory {\em semantics} attribute and a {\em content\_qualifier}.
 
-The terms defined for response functions (see \S\ref{sec:responsefct}) may thus be used to fill the {\em content\_qualifier} attributes, with {\em semantics} = {\bf \#calibration}.
+The terms defined for response functions (see \S\ref{sec:responsefct}) may thus be used to fill the {\em content\_qualifier} attributes, with {\em semantics} = "{\bf \#calibration}".
 
 
 \subsection{UCD Enhancements}\label{sec:UCDs}
 
 \subsubsection{Pulse Height}
 
-For many X-ray and gamma-ray instruments the signal observed in a given detector spectral channel is the result of event counting and would typically be recorded as a Pulse Height Amplitude (PHA), or perhaps a Pulse Invariant (PI) value that is calculated from PHA by applying an appropriate gain calibration.  The PHA (or PI) can be related to the incident particle energy by applying the appropriate {\bf response-function}, and higher data calibration level products may replace or augment these values with quantities such as energy, or perhaps particle or energy flux.
+For many X-ray and gamma-ray instruments, the signal observed in a given detector spectral channel is the result of event counting and would typically be recorded as a Pulse Height Amplitude (PHA), or perhaps a Pulse Invariant (PI) value that is calculated from PHA by applying an appropriate gain calibration.  The PHA (or PI) can be related to the incident particle energy by applying the appropriate {\bf response-function}, and higher data calibration level products may replace or augment these values with quantities such as energy, or perhaps particle or energy flux.
 
-There is currently no UCD defined for a raw pulse height amplitude measure like PHA (or PI). PHA is such an important quantity to \gls{HEA} datasets that we propose adding a new UCD {\em phys.pulseHeight\/} for these raw data values.  We note that the background signal (both of instrumental and cosmological origin) may be significant for many \gls{HEA} detectors and so the detected events are unrelated to any observed source on the sky.
+There is currently no UCD defined for a raw pulse height amplitude measure like PHA (or PI). PHA is such an important quantity to \gls{HEA} datasets that we propose adding a new UCD {\em instr.pulseHeight\/} for these raw data values.  We note that the background signal (both of instrumental and cosmological origin) may be significant for many \gls{HEA} detectors and so the detected events are unrelated to any observed source on the sky.
 
-A proposed solution suggests using {\em src.var.amplitude;src.var.pulse;stat.uncalib\/} for PHA, but this is not really appropriate since the connection to {\em src\/} (``observed source viewed on the sky'') is misleading and {\em src.var.amplitude\/} is defined as the ``amplitude of variation'' of the source which is a completely separate concept from an astronomical perspective.
+A proposed solution suggests using {\em src.var.amplitude;src.var.pulse;stat.\\uncalib\/} for PHA, but this is not really appropriate since the connection to {\em src\/} (``observed source viewed on the sky'') is misleading and {\em src.var.amplitude\/} is defined as the ``amplitude of variation'' of the source which is a completely separate concept from an astronomical perspective.
 
 \subsubsection{Electromagnetic spectrum description in UCD}
 
-The current definitions for the gamma-ray domains should be corrected and extended to include the \gls{HEA}, \gls{VHE} and \gls{UHE} gamma-ray domains.
+The current definitions for the gamma-ray domains should be corrected and extended to include the \gls{HEA}, \gls{VHE} and \gls{UHE} gamma-ray domains. Their associated energy ranges should be specified.
 
 \subsubsection{Event Type}
 
-For \gls{VHE} (and GeV) data there is the notion of event type that can be mandatory for some data releases.  We propose to add a new UCD {\em instr.evt-type\/} that identifies these data values.
-% Needs input from relevant source
+For \gls{VHE} (and GeV) data, there is the notion of event type (see section \ref{sec:evttype}) that can be mandatory for some data releases.  We propose to add a new UCD {\em instr.evt-type\/} that identifies these data values.
 
 \subsubsection{Particles}
 
-Observations may concern other particles than the one currently described in the UCD list. The following particles could be added: electron/positron, cosmic rays, as well as their energy
+Observations may concern particles other than those currently described in the UCD list, such as cosmic rays, which should be added.
+
+One should note that electrons are denoted by {\em phys.electron\/} and not classified as particles, e.g. {\em phys.particle.electron\/}. This causes some inconsistencies that could be solved by marking {\em phys.electron\/} and {\em phys.electron.degen\/} as obsolete or not recommended, and adding in the UCDs list {\em phys.particle.electron\/}. Because now some instruments can distinguish electrons from positrons\footnote{for example, the experiment Fermi-LAT}, as well antiprotons from protons\footnote{for example, the experiment AMS-2}, we propose to also add {\em phys.particle.positron\/} and {\em phys.particle.antiproton\/}.
 
 \subsubsection{Statistical UCDs}
 
-We suggest restricting {\em stat.max}/{\em stat.min} to mean the maximum/minimum statistic and adding new terms {\em stat.upperlimit}/{\em stat.lowerlimit} for upper/lower limits. For upper/lower limits, one expects a confidence level to be provided, which could be described by a UCD {\em stat.confidenceLevel}.
+{\em stat.max}/{\em stat.min} are currently poorly defined as ``Minimum or lowest limit'' and ``Maximum or upper limit'', mixing a edge and a quantile of an error or a limit. As consequence, one can not publish both statistical errors and limits. And the confidence probabilities (e.g. 90\%) can not be precised.
 
-One proposes also to add a likelihood profile as UCD
+We suggest updating {\em stat.max}/{\em stat.min} and adding new terms to distinguish errors and upper/lower limits, as well as their confidence probabilities.
 
 \subsubsection{Evolution of UCD list}
 
-The proposed UCD entries are listed in Table~\ref{tab:he_ucds} with their descriptions.
+The proposed new UCD entries are listed in Table~\ref{tab:he_ucds} with their descriptions.
 
 \begin{longtable}{p{0.1\linewidth}p{0.3\linewidth}p{0.6\linewidth}}
 \sptablerule
@@ -466,38 +473,65 @@ S & em.gamma.hard & Hard gamma ray (500 keV - 100 MeV)  \cr
 S & em.gamma.he   & High-Energy gamma ray (100 MeV - 10 GeV)  \cr
 S & em.gamma.vhe  & Very-High-Energy gamma ray (10 GeV - 100 TeV)  \cr
 S & em.gamma.uhe  & Ultra-High-Energy gamma ray (100 TeV - 10 PeV)  \cr
-S & phys.pulseHeight & Pulse height amplitude measure  \cr
-S & phys.particle.electron & Related to electron/positron  \cr
-S & phys.particle.cosmicray   & Related to cosmic rays particles  \cr
+S & instr.pulseHeight & Pulse height amplitude measure  \cr
+S & phys.particle.electron & Related to electron  \cr
+S & phys.particle.positron & Related to positron  \cr
+S & phys.particle.antiprotron  & Related to anti-proton \cr
+S & phys.particle.cosmicray & Related to cosmic rays particles  \cr
 P & stats.error.negative & Negative statistical error  \cr
 P & stats.error.positive  & Positive statistical error  \cr
+P & stat.error.confidenceLevel & Level of confidence for an error computation  \cr
 P & stat.upperlimit  & Upper limit \cr
 P & stat.lowerlimit  & Lower limit \cr
-P & stat.confidenceLevel & Level of confidence for a upper/lower limit computation  \cr
-P & stat.likelihood.profile & Profile of likelihood values \cr
-E & phot.strcount & Particle flux per steradian (dimension: [L$^{-2}$ T$^{-1}$ sr$^{-1}$])  \cr
-E & phot.diffcount & Particle flux density (or differential particle flux) (dimension: [L$^{-2}$ T$^{-1}$ E$^{-1}$])  \cr
-E & phot.strflux & Energy flux per steradian or radiance (dimension: [W L$^{-2}$ sr$^{-1}$])  \cr
-E & phot.enflux & Energy flux density (dimension: [W L$^{-2}$ sr$^{-1}$] E$^{-1}$)  \cr
+P & stat.limit.confidenceLevel & Level of confidence for a upper/lower limit computation  \cr
+E & phys.flux.density & Flux density or differential flux (dimension: [L$^{-2}$ T$^{-1}$ E$^{-1}$] \cr
+E & phys.flux.density.sb & Flux density surface brightness [L$^{-2}$ T$^{-1}$ E$^{-1}$ sr$^{-1}$]  \cr
+E & phys.flux.sb & Flux or flow of particle, energy, etc. per steradian (dimension: [L$^{-2}$ T$^{-1}$ sr$^{-1}$])  \cr
+E & phys.radiance & Radiance as energy flux per solid angle (dimension: [W L$^{-2}$ sr$^{-1}$] or [E T$^{-1}$ L$^{-2}$ sr$^{-1}$]) \cr
+Q & phys.flux.energy.sb & Energy flux, heat flux per steradian (dimension: [W L$^{-2}$  sr$^{-1}$] or [E T$^{-1}$ L$^{-2}$  sr$^{-1}$]) \cr
 \sptablerule
 \caption{UCD words proposed extension}
 \label{tab:he_ucds}
 \end{longtable}
 
-And here is the proposals of update of the existing flux terms:
+And here is the proposal of update of existing terms:
 \begin{longtable}{p{0.1\linewidth}p{0.3\linewidth}p{0.6\linewidth}}
 \sptablerule
 \textbf{Label}  &  \textbf{UCD word} & \textbf{Description}\cr
 \sptablerule
+S & phys.electron & Electron (not recommended) \cr
+S &	stat.min  & Minimum of a parameter \cr
+S & stat.max  & Maximum or a parameter \cr
 E & phot.count & Flux expressed in counts (dimension: [L$^{-2}$ T$^{-1}$])  \cr
-E & phot.flux & Photon flux or irradiance or energy flux (dimension: [W L$^{-2}$])  \cr
+Q & phys.flux & Flux or flow of particle, energy, etc. (dimension: [L$^{-2}$ T$^{-1}$]) \cr
+Q & phot.flux.bol & Bolometric flux or irradiance or energy flux (dimension: [W L$^{-2}$] or [E T$^{-1}$ L$^{-2}$]) \cr
+E & phot.flux.density & Flux density or differential flux (dimension: [L$^{-2}$ T$^{-1}$ E$^{-1}$]) \cr
+E & phot.flux.density.sb & Flux density surface brightness (dimension: [L$^{-2}$ T$^{-1}$ E$^{-1}$ sr$^{-1}$])\cr
+E & phot.flux.sb & Flux surface brightness or flux per steradian (dimension: [L$^{-2}$ T$^{-1}$ sr$^{-1}$]) \cr
+E & phot.fluence & Radiant photon energy received by a surface per unit area or irradiance of a surface integrated over time of irradiation (dimension: [L$^{-2}$]) \cr
+Q & phys.flux.energy & Energy flux, heat flux (dimension: [W L$^{-2}$] or [E T$^{-1}$ L$^{-2}$]) \cr
+E & phys.luminosity & Luminosity or energy par unit of time (dimension: [W] or [E T$^{-1}$]) \cr
 \sptablerule
 \caption{UCD words proposed upgrade}
 \label{tab:upgrade_he_ucds}
 \end{longtable}
 
+In addition, if the document called ``Electromagnetic spectrum description in UCD - Version 0.3'' from 2004-05-20 is of use, some mistakes and updates should be done:
 
-\todo[inline]{\bf BKH: Karl, should we add the excess number? stat.excess or stat.fit.excess? Any idea for the reco/true physical parameters?}
+\begin{longtable}{p{0.2\linewidth}p{0.22\linewidth}p{0.22\linewidth}p{0.2\linewidth}p{0.07\linewidth}}
+\sptablerule
+\textbf{UCD \newline designation}  &  \textbf{Wavelength} & \textbf{Frequency} & \textbf{Energy} & \textbf{Notes}\cr
+\sptablerule
+ Gamma Regime  & & & & \cr
+ em.gamma.soft & 2.5-10pm      & 30-120EHz    & 120-500keV & \cr
+ em.gamma.hard & 12-2500fm     & 120EHz-24ZHz & 500keV-100MeV &  \cr
+ em.gamma.he   & 0.1-12fm      & 24ZHz-2.4YHz & 100MeV-10GeV  & \cr
+ em.gamma.vhe  & 0.01am-0.1fm  & 2.4YHz-24200YHz   & 10GeV-100TeV  & \cr
+ em.gamma.uhe  & 1.2e-4am-0.01am & 24.2e3-2.4e6YHz & 100TeV-10PeV  & \cr
+\sptablerule
+\caption{Upgrade of the electromagnetic spectrum description}
+\label{tab:upgrade_sp_ucds}
+\end{longtable}
 
 \subsection{MIME-types Enhancements}\label{sec:mimetypes}
 
