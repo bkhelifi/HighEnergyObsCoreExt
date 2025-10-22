@@ -490,6 +490,12 @@ E & phys.flux.density.sb & Flux density surface brightness [L$^{-2}$ T$^{-1}$ E$
 E & phys.flux.sb & Flux or flow of particle, energy, etc. per steradian (dimension: [L$^{-2}$ T$^{-1}$ sr$^{-1}$])  \cr
 E & phys.radiance & Radiance as energy flux per solid angle (dimension: [W L$^{-2}$ sr$^{-1}$] or [E T$^{-1}$ L$^{-2}$ sr$^{-1}$]) \cr
 Q & phys.flux.energy.sb & Energy flux, heat flux per steradian (dimension: [W L$^{-2}$  sr$^{-1}$] or [E T$^{-1}$ L$^{-2}$  sr$^{-1}$]) \cr
+S & em.gamma.he   &100MeV-100GeV  \cr
+S & em.gamma.vhe  &100GeV-100TeV  \cr
+S & em.gamma.uhe  &100TeV-10PeV  \cr
+S & phys.particle.he   &100MeV-100GeV  \cr
+S & phys.particle.vhe  &100GeV-100TeV  \cr
+S & phys.particle.uhe  &100TeV-10PeV  \cr
 \sptablerule
 \caption{UCD words proposed extension}
 \label{tab:he_ucds}
@@ -512,27 +518,12 @@ E & phot.flux.sb & Flux surface brightness or flux per steradian (dimension: [L$
 E & phot.fluence & Radiant photon energy received by a surface per unit area or irradiance of a surface integrated over time of irradiation (dimension: [L$^{-2}$]) \cr
 Q & phys.flux.energy & Energy flux, heat flux (dimension: [W L$^{-2}$] or [E T$^{-1}$ L$^{-2}$]) \cr
 E & phys.luminosity & Luminosity or energy par unit of time (dimension: [W] or [E T$^{-1}$]) \cr
+S &  em.gamma.hard & 500keV-100MeV  \cr
 \sptablerule
 \caption{UCD words proposed upgrade}
 \label{tab:upgrade_he_ucds}
 \end{longtable}
 
-In addition, if the document called ``Electromagnetic spectrum description in UCD - Version 0.3'' from 2004-05-20 is of use, some mistakes should be corrected and some updates should be made:
-
-\begin{longtable}{p{0.2\linewidth}p{0.22\linewidth}p{0.22\linewidth}p{0.2\linewidth}p{0.07\linewidth}}
-\sptablerule
-\textbf{UCD \newline designation}  &  \textbf{Wavelength} & \textbf{Frequency} & \textbf{Energy} & \textbf{Notes}\cr
-\sptablerule
- Gamma Regime  & & & & \cr
- em.gamma.soft & 2.5-10pm      & 30-120EHz    & 120-500keV & \cr
- em.gamma.hard & 12-2500fm     & 120EHz-24ZHz & 500keV-100MeV &  \cr
- em.gamma.he   & 0.1-12fm      & 24ZHz-2.4YHz & 100MeV-10GeV  & \cr
- em.gamma.vhe  & 0.01am-0.1fm  & 2.4YHz-24200YHz   & 10GeV-100TeV  & \cr
- em.gamma.uhe  & 1.2e-4am-0.01am & 24.2e3-2.4e6YHz & 100TeV-10PeV  & \cr
-\sptablerule
-\caption{Upgrade of the electromagnetic spectrum description}
-\label{tab:upgrade_sp_ucds}
-\end{longtable}
 
 \subsection{MIME-types Enhancements}\label{sec:mimetypes}
 
