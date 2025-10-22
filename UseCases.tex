@@ -191,8 +191,9 @@ First, run the ObCore query:
 SELECT * FROM ivoa.obscore
 NATURAL JOIN  ivoa.obscore_hea
 WHERE (INTERSECTS(s_region, CIRCLE(312.775, 30.683, 1.5)) = 1)
-AND (dataproduct_type = 'event-list' OR dataproduct_type = 'aeff' OR dataproduct_type = 'edisp'
-  OR dataproduct_type = 'psf' OR dataproduct_type = 'bkgrate')
+AND (dataproduct_type = 'event-list' OR dataproduct_type = 'aeff' 
+  OR dataproduct_type = 'edisp' OR dataproduct_type = 'psf' OR
+  dataproduct_type = 'bkgrate')
 AND (obs_collection = 'SWGO-DR1')
 AND (event_type = 'very-good')
 \end{verbatim}
@@ -250,8 +251,6 @@ FOR EACH ROW OF OUTPUT_VOTABLE:
     - IF ROW['content_qualifier'] = 'event-list'
     	EVENT_FILE['OBS_ID'] = GET RAW['accessURL']
 \end{verbatim}
-
-\todo[inline]{To Be Checked - Mathieu, Mireille?}
 
 
 \subsection{Very-High-Level Data Products}
